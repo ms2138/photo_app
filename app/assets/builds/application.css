@@ -17893,3 +17893,15 @@ body {
   margin-left: 5px;
   letter-spacing: -1px;
 }
+
+.navbar-action-section a {
+  padding-left: 15px;
+  text-decoration: none;
+}
+.navbar-action-section svg {
+  font-size: 20px;
+  color: black;
+}
+.navbar-action-section svg:hover {
+  color: #818181;
+}

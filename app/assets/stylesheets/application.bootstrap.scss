@@ -25,3 +25,19 @@ html {
     }
     text-decoration: none;
   }
+
+  .navbar-action-section {
+    a {
+      padding-left: 15px;
+      text-decoration: none;
+    }
+
+    svg {
+        font-size: 20px;
+        color: black;
+        &:hover {
+          color: rgb(129, 129, 129);
+        }
+    }
+  }
+
