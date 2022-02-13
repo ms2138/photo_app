@@ -1,5 +1,7 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+@import 'dropzone/dist/dropzone';
+@import 'dropzone/dist/basic';
 
 html {
     font-family: sans-serif;
@@ -41,3 +43,20 @@ html {
     }
   }
 
+  .dropzone {
+    border: dashed 2px rgb(190, 190, 190);
+    border-radius: 10px;
+    color: rgb(190, 190, 190);
+  
+    &.dz-drag-hover {
+      border: dashed 2px rgb(146, 146, 146);
+  
+      .dz-message {
+        opacity: 0.2;
+      }
+    }
+  
+    &.dropzone-msg-title {
+      color: red;
+    }
+  }

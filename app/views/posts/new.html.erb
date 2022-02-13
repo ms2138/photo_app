@@ -1,2 +1,40 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
+<% provide(:title, "New Post") %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body p-4 text-center">
+        <h1 class="card-title mb-4">Create Post</h1>
+
+          <%= form_with(model: [@post.user, @post], local: true, multipart: true) do |f| %>
+              <%= render 'devise/shared/error_messages', resource: f.object %>
+
+              <div class="form-group mb-3">
+                <%= f.text_area :content, class: "form-control", rows: 4, autofocus: true, autocomplete: "content"%>
+              </div>
+
+              <div class="mb-6">
+                <div class="dropzone dropzone-default dz-clickable mb-3" data-controller="dropzone" data-dropzone-accepted-files=".jpg, .png"
+                data-dropzone-add-remove-links="false" data-dropzone-max-file-size="3" data-dropzone-max-files="2">
+                <%= f.file_field :images, direct_upload: true, multiple: true, data: { target: 'dropzone.input' } %>
+                <div class="dropzone-msg dz-message needsclick text-gray-600">
+                  <h3 class="dropzone-msg-title">Drag image here to upload</h3>
+                  <span class="dropzone-msg-desc text-sm">3 MB file size maximum. Allowed file types png, jpg.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <%#= f.label :images, class: "form-label" %>
+                <%#= f.file_field :images, class: 'form-control form-control-lg', multiple: true %>
+              </div>
+
+              <div class="actions">
+                <%= f.submit 'Create Post', class: 'btn btn-primary btn-lg' %>
+              </div>
+          <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

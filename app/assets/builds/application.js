@@ -1,12 +1,17 @@
 (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __esm = (fn2, res) => function __init() {
     return fn2 && (res = (0, fn2[__getOwnPropNames(fn2)[0]])(fn2 = 0)), res;
   };
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __publicField = (obj, key, value) => {
+    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+    return value;
   };
 
   // node_modules/@rails/actioncable/src/adapters.js
@@ -1274,16 +1279,16 @@
     get permanentElements() {
       return [...this.element.querySelectorAll("[id][data-turbo-permanent]")];
     }
-    getPermanentElementById(id) {
-      return this.element.querySelector(`#${id}[data-turbo-permanent]`);
+    getPermanentElementById(id2) {
+      return this.element.querySelector(`#${id2}[data-turbo-permanent]`);
     }
     getPermanentElementMapForSnapshot(snapshot) {
       const permanentElementMap = {};
       for (const currentPermanentElement of this.permanentElements) {
-        const { id } = currentPermanentElement;
-        const newPermanentElement = snapshot.getPermanentElementById(id);
+        const { id: id2 } = currentPermanentElement;
+        const newPermanentElement = snapshot.getPermanentElementById(id2);
         if (newPermanentElement) {
-          permanentElementMap[id] = [currentPermanentElement, newPermanentElement];
+          permanentElementMap[id2] = [currentPermanentElement, newPermanentElement];
         }
       }
       return permanentElementMap;
@@ -1460,14 +1465,14 @@
       bardo.leave();
     }
     enter() {
-      for (const id in this.permanentElementMap) {
-        const [, newPermanentElement] = this.permanentElementMap[id];
+      for (const id2 in this.permanentElementMap) {
+        const [, newPermanentElement] = this.permanentElementMap[id2];
         this.replaceNewPermanentElementWithPlaceholder(newPermanentElement);
       }
     }
     leave() {
-      for (const id in this.permanentElementMap) {
-        const [currentPermanentElement] = this.permanentElementMap[id];
+      for (const id2 in this.permanentElementMap) {
+        const [currentPermanentElement] = this.permanentElementMap[id2];
         this.replaceCurrentPermanentElementWithClone(currentPermanentElement);
         this.replacePlaceholderWithPermanentElement(currentPermanentElement);
       }
@@ -1484,8 +1489,8 @@
       const placeholder = this.getPlaceholderById(permanentElement.id);
       placeholder === null || placeholder === void 0 ? void 0 : placeholder.replaceWith(permanentElement);
     }
-    getPlaceholderById(id) {
-      return this.placeholders.find((element) => element.content == id);
+    getPlaceholderById(id2) {
+      return this.placeholders.find((element) => element.content == id2);
     }
     get placeholders() {
       return [...document.querySelectorAll("meta[name=turbo-permanent-placeholder][content]")];
@@ -2352,9 +2357,9 @@
       return frame ? frame != element.closest("turbo-frame") : false;
     }
     findFrameElement(element, submitter) {
-      const id = (submitter === null || submitter === void 0 ? void 0 : submitter.getAttribute("data-turbo-frame")) || element.getAttribute("data-turbo-frame");
-      if (id && id != "_top") {
-        const frame = this.element.querySelector(`#${id}:not([disabled])`);
+      const id2 = (submitter === null || submitter === void 0 ? void 0 : submitter.getAttribute("data-turbo-frame")) || element.getAttribute("data-turbo-frame");
+      if (id2 && id2 != "_top") {
+        const frame = this.element.querySelector(`#${id2}:not([disabled])`);
         if (frame instanceof FrameElement) {
           return frame;
         }
@@ -3467,21 +3472,21 @@
     }
     findFrameElement(element, submitter) {
       var _a;
-      const id = getAttribute("data-turbo-frame", submitter, element) || this.element.getAttribute("target");
-      return (_a = getFrameElementById(id)) !== null && _a !== void 0 ? _a : this.element;
+      const id2 = getAttribute("data-turbo-frame", submitter, element) || this.element.getAttribute("target");
+      return (_a = getFrameElementById(id2)) !== null && _a !== void 0 ? _a : this.element;
     }
     async extractForeignFrameElement(container) {
       let element;
-      const id = CSS.escape(this.id);
+      const id2 = CSS.escape(this.id);
       try {
-        if (element = activateElement(container.querySelector(`turbo-frame#${id}`), this.currentURL)) {
+        if (element = activateElement(container.querySelector(`turbo-frame#${id2}`), this.currentURL)) {
           return element;
         }
-        if (element = activateElement(container.querySelector(`turbo-frame[src][recurse~=${id}]`), this.currentURL)) {
+        if (element = activateElement(container.querySelector(`turbo-frame[src][recurse~=${id2}]`), this.currentURL)) {
           await element.loaded;
           return await this.extractForeignFrameElement(element);
         }
-        console.error(`Response has no matching <turbo-frame id="${id}"> element`);
+        console.error(`Response has no matching <turbo-frame id="${id2}"> element`);
       } catch (error2) {
         console.error(error2);
       }
@@ -3492,15 +3497,15 @@
       return locationIsVisitable(expandURL(action), this.rootLocation);
     }
     shouldInterceptNavigation(element, submitter) {
-      const id = getAttribute("data-turbo-frame", submitter, element) || this.element.getAttribute("target");
+      const id2 = getAttribute("data-turbo-frame", submitter, element) || this.element.getAttribute("target");
       if (element instanceof HTMLFormElement && !this.formActionIsVisitable(element, submitter)) {
         return false;
       }
-      if (!this.enabled || id == "_top") {
+      if (!this.enabled || id2 == "_top") {
         return false;
       }
-      if (id) {
-        const frameElement = getFrameElementById(id);
+      if (id2) {
+        const frameElement = getFrameElementById(id2);
         if (frameElement) {
           return !frameElement.disabled;
         }
@@ -3562,16 +3567,16 @@
     constructor(element) {
       this.visitCachedSnapshot = ({ element: element2 }) => {
         var _a;
-        const { id, clone } = this;
-        (_a = element2.querySelector("#" + id)) === null || _a === void 0 ? void 0 : _a.replaceWith(clone);
+        const { id: id2, clone } = this;
+        (_a = element2.querySelector("#" + id2)) === null || _a === void 0 ? void 0 : _a.replaceWith(clone);
       };
       this.clone = element.cloneNode(true);
       this.id = element.id;
     }
   };
-  function getFrameElementById(id) {
-    if (id != null) {
-      const element = document.getElementById(id);
+  function getFrameElementById(id2) {
+    if (id2 != null) {
+      const element = document.getElementById(id2);
       if (element instanceof FrameElement) {
         return element;
       }
@@ -5665,15 +5670,2676 @@
   application.debug = false;
   window.Stimulus = application;
 
-  // app/javascript/controllers/hello_controller.js
-  var hello_controller_default = class extends Controller {
-    connect() {
-      this.element.textContent = "Hello World!";
+  // node_modules/just-extend/index.esm.js
+  var objectExtend = extend3;
+  function extend3() {
+    var args = [].slice.call(arguments);
+    var deep = false;
+    if (typeof args[0] == "boolean") {
+      deep = args.shift();
+    }
+    var result = args[0];
+    if (isUnextendable(result)) {
+      throw new Error("extendee must be an object");
+    }
+    var extenders = args.slice(1);
+    var len = extenders.length;
+    for (var i = 0; i < len; i++) {
+      var extender = extenders[i];
+      for (var key in extender) {
+        if (Object.prototype.hasOwnProperty.call(extender, key)) {
+          var value = extender[key];
+          if (deep && isCloneable(value)) {
+            var base = Array.isArray(value) ? [] : {};
+            result[key] = extend3(true, Object.prototype.hasOwnProperty.call(result, key) && !isUnextendable(result[key]) ? result[key] : base, value);
+          } else {
+            result[key] = value;
+          }
+        }
+      }
+    }
+    return result;
+  }
+  function isCloneable(obj) {
+    return Array.isArray(obj) || {}.toString.call(obj) == "[object Object]";
+  }
+  function isUnextendable(val) {
+    return !val || typeof val != "object" && typeof val != "function";
+  }
+
+  // node_modules/dropzone/dist/dropzone.mjs
+  function $parcel$interopDefault(a) {
+    return a && a.__esModule ? a.default : a;
+  }
+  var $4040acfd8584338d$export$2e2bcd8739ae039 = class {
+    on(event, fn2) {
+      this._callbacks = this._callbacks || {};
+      if (!this._callbacks[event])
+        this._callbacks[event] = [];
+      this._callbacks[event].push(fn2);
+      return this;
+    }
+    emit(event, ...args) {
+      this._callbacks = this._callbacks || {};
+      let callbacks = this._callbacks[event];
+      if (callbacks)
+        for (let callback of callbacks)
+          callback.apply(this, args);
+      if (this.element)
+        this.element.dispatchEvent(this.makeEvent("dropzone:" + event, {
+          args
+        }));
+      return this;
+    }
+    makeEvent(eventName, detail) {
+      let params = {
+        bubbles: true,
+        cancelable: true,
+        detail
+      };
+      if (typeof window.CustomEvent === "function")
+        return new CustomEvent(eventName, params);
+      else {
+        var evt = document.createEvent("CustomEvent");
+        evt.initCustomEvent(eventName, params.bubbles, params.cancelable, params.detail);
+        return evt;
+      }
+    }
+    off(event, fn2) {
+      if (!this._callbacks || arguments.length === 0) {
+        this._callbacks = {};
+        return this;
+      }
+      let callbacks = this._callbacks[event];
+      if (!callbacks)
+        return this;
+      if (arguments.length === 1) {
+        delete this._callbacks[event];
+        return this;
+      }
+      for (let i = 0; i < callbacks.length; i++) {
+        let callback = callbacks[i];
+        if (callback === fn2) {
+          callbacks.splice(i, 1);
+          break;
+        }
+      }
+      return this;
     }
   };
+  var $fd6031f88dce2e32$exports = {};
+  $fd6031f88dce2e32$exports = '<div class="dz-preview dz-file-preview">\n  <div class="dz-image"><img data-dz-thumbnail=""></div>\n  <div class="dz-details">\n    <div class="dz-size"><span data-dz-size=""></span></div>\n    <div class="dz-filename"><span data-dz-name=""></span></div>\n  </div>\n  <div class="dz-progress">\n    <span class="dz-upload" data-dz-uploadprogress=""></span>\n  </div>\n  <div class="dz-error-message"><span data-dz-errormessage=""></span></div>\n  <div class="dz-success-mark">\n    <svg width="54" height="54" viewBox="0 0 54 54" fill="white" xmlns="http://www.w3.org/2000/svg">\n      <path d="M10.2071 29.7929L14.2929 25.7071C14.6834 25.3166 15.3166 25.3166 15.7071 25.7071L21.2929 31.2929C21.6834 31.6834 22.3166 31.6834 22.7071 31.2929L38.2929 15.7071C38.6834 15.3166 39.3166 15.3166 39.7071 15.7071L43.7929 19.7929C44.1834 20.1834 44.1834 20.8166 43.7929 21.2071L22.7071 42.2929C22.3166 42.6834 21.6834 42.6834 21.2929 42.2929L10.2071 31.2071C9.81658 30.8166 9.81658 30.1834 10.2071 29.7929Z"></path>\n    </svg>\n  </div>\n  <div class="dz-error-mark">\n    <svg width="54" height="54" viewBox="0 0 54 54" fill="white" xmlns="http://www.w3.org/2000/svg">\n      <path d="M26.2929 20.2929L19.2071 13.2071C18.8166 12.8166 18.1834 12.8166 17.7929 13.2071L13.2071 17.7929C12.8166 18.1834 12.8166 18.8166 13.2071 19.2071L20.2929 26.2929C20.6834 26.6834 20.6834 27.3166 20.2929 27.7071L13.2071 34.7929C12.8166 35.1834 12.8166 35.8166 13.2071 36.2071L17.7929 40.7929C18.1834 41.1834 18.8166 41.1834 19.2071 40.7929L26.2929 33.7071C26.6834 33.3166 27.3166 33.3166 27.7071 33.7071L34.7929 40.7929C35.1834 41.1834 35.8166 41.1834 36.2071 40.7929L40.7929 36.2071C41.1834 35.8166 41.1834 35.1834 40.7929 34.7929L33.7071 27.7071C33.3166 27.3166 33.3166 26.6834 33.7071 26.2929L40.7929 19.2071C41.1834 18.8166 41.1834 18.1834 40.7929 17.7929L36.2071 13.2071C35.8166 12.8166 35.1834 12.8166 34.7929 13.2071L27.7071 20.2929C27.3166 20.6834 26.6834 20.6834 26.2929 20.2929Z"></path>\n    </svg>\n  </div>\n</div>\n';
+  var $4ca367182776f80b$var$defaultOptions = {
+    url: null,
+    method: "post",
+    withCredentials: false,
+    timeout: null,
+    parallelUploads: 2,
+    uploadMultiple: false,
+    chunking: false,
+    forceChunking: false,
+    chunkSize: 2097152,
+    parallelChunkUploads: false,
+    retryChunks: false,
+    retryChunksLimit: 3,
+    maxFilesize: 256,
+    paramName: "file",
+    createImageThumbnails: true,
+    maxThumbnailFilesize: 10,
+    thumbnailWidth: 120,
+    thumbnailHeight: 120,
+    thumbnailMethod: "crop",
+    resizeWidth: null,
+    resizeHeight: null,
+    resizeMimeType: null,
+    resizeQuality: 0.8,
+    resizeMethod: "contain",
+    filesizeBase: 1e3,
+    maxFiles: null,
+    headers: null,
+    defaultHeaders: true,
+    clickable: true,
+    ignoreHiddenFiles: true,
+    acceptedFiles: null,
+    acceptedMimeTypes: null,
+    autoProcessQueue: true,
+    autoQueue: true,
+    addRemoveLinks: false,
+    previewsContainer: null,
+    disablePreviews: false,
+    hiddenInputContainer: "body",
+    capture: null,
+    renameFilename: null,
+    renameFile: null,
+    forceFallback: false,
+    dictDefaultMessage: "Drop files here to upload",
+    dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+    dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+    dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+    dictInvalidFileType: "You can't upload files of this type.",
+    dictResponseError: "Server responded with {{statusCode}} code.",
+    dictCancelUpload: "Cancel upload",
+    dictUploadCanceled: "Upload canceled.",
+    dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
+    dictRemoveFile: "Remove file",
+    dictRemoveFileConfirmation: null,
+    dictMaxFilesExceeded: "You can not upload any more files.",
+    dictFileSizeUnits: {
+      tb: "TB",
+      gb: "GB",
+      mb: "MB",
+      kb: "KB",
+      b: "b"
+    },
+    init() {
+    },
+    params(files, xhr, chunk) {
+      if (chunk)
+        return {
+          dzuuid: chunk.file.upload.uuid,
+          dzchunkindex: chunk.index,
+          dztotalfilesize: chunk.file.size,
+          dzchunksize: this.options.chunkSize,
+          dztotalchunkcount: chunk.file.upload.totalChunkCount,
+          dzchunkbyteoffset: chunk.index * this.options.chunkSize
+        };
+    },
+    accept(file, done) {
+      return done();
+    },
+    chunksUploaded: function(file, done) {
+      done();
+    },
+    binaryBody: false,
+    fallback() {
+      let messageElement;
+      this.element.className = `${this.element.className} dz-browser-not-supported`;
+      for (let child of this.element.getElementsByTagName("div"))
+        if (/(^| )dz-message($| )/.test(child.className)) {
+          messageElement = child;
+          child.className = "dz-message";
+          break;
+        }
+      if (!messageElement) {
+        messageElement = $3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement('<div class="dz-message"><span></span></div>');
+        this.element.appendChild(messageElement);
+      }
+      let span = messageElement.getElementsByTagName("span")[0];
+      if (span) {
+        if (span.textContent != null)
+          span.textContent = this.options.dictFallbackMessage;
+        else if (span.innerText != null)
+          span.innerText = this.options.dictFallbackMessage;
+      }
+      return this.element.appendChild(this.getFallbackForm());
+    },
+    resize(file, width, height, resizeMethod) {
+      let info = {
+        srcX: 0,
+        srcY: 0,
+        srcWidth: file.width,
+        srcHeight: file.height
+      };
+      let srcRatio = file.width / file.height;
+      if (width == null && height == null) {
+        width = info.srcWidth;
+        height = info.srcHeight;
+      } else if (width == null)
+        width = height * srcRatio;
+      else if (height == null)
+        height = width / srcRatio;
+      width = Math.min(width, info.srcWidth);
+      height = Math.min(height, info.srcHeight);
+      let trgRatio = width / height;
+      if (info.srcWidth > width || info.srcHeight > height) {
+        if (resizeMethod === "crop") {
+          if (srcRatio > trgRatio) {
+            info.srcHeight = file.height;
+            info.srcWidth = info.srcHeight * trgRatio;
+          } else {
+            info.srcWidth = file.width;
+            info.srcHeight = info.srcWidth / trgRatio;
+          }
+        } else if (resizeMethod === "contain") {
+          if (srcRatio > trgRatio)
+            height = width / srcRatio;
+          else
+            width = height * srcRatio;
+        } else
+          throw new Error(`Unknown resizeMethod '${resizeMethod}'`);
+      }
+      info.srcX = (file.width - info.srcWidth) / 2;
+      info.srcY = (file.height - info.srcHeight) / 2;
+      info.trgWidth = width;
+      info.trgHeight = height;
+      return info;
+    },
+    transformFile(file, done) {
+      if ((this.options.resizeWidth || this.options.resizeHeight) && file.type.match(/image.*/))
+        return this.resizeImage(file, this.options.resizeWidth, this.options.resizeHeight, this.options.resizeMethod, done);
+      else
+        return done(file);
+    },
+    previewTemplate: /* @__PURE__ */ $parcel$interopDefault($fd6031f88dce2e32$exports),
+    drop(e) {
+      return this.element.classList.remove("dz-drag-hover");
+    },
+    dragstart(e) {
+    },
+    dragend(e) {
+      return this.element.classList.remove("dz-drag-hover");
+    },
+    dragenter(e) {
+      return this.element.classList.add("dz-drag-hover");
+    },
+    dragover(e) {
+      return this.element.classList.add("dz-drag-hover");
+    },
+    dragleave(e) {
+      return this.element.classList.remove("dz-drag-hover");
+    },
+    paste(e) {
+    },
+    reset() {
+      return this.element.classList.remove("dz-started");
+    },
+    addedfile(file) {
+      if (this.element === this.previewsContainer)
+        this.element.classList.add("dz-started");
+      if (this.previewsContainer && !this.options.disablePreviews) {
+        file.previewElement = $3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement(this.options.previewTemplate.trim());
+        file.previewTemplate = file.previewElement;
+        this.previewsContainer.appendChild(file.previewElement);
+        for (var node of file.previewElement.querySelectorAll("[data-dz-name]"))
+          node.textContent = file.name;
+        for (node of file.previewElement.querySelectorAll("[data-dz-size]"))
+          node.innerHTML = this.filesize(file.size);
+        if (this.options.addRemoveLinks) {
+          file._removeLink = $3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement(`<a class="dz-remove" href="javascript:undefined;" data-dz-remove>${this.options.dictRemoveFile}</a>`);
+          file.previewElement.appendChild(file._removeLink);
+        }
+        let removeFileEvent = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING)
+            return $3ed269f2f0fb224b$export$2e2bcd8739ae039.confirm(this.options.dictCancelUploadConfirmation, () => this.removeFile(file));
+          else {
+            if (this.options.dictRemoveFileConfirmation)
+              return $3ed269f2f0fb224b$export$2e2bcd8739ae039.confirm(this.options.dictRemoveFileConfirmation, () => this.removeFile(file));
+            else
+              return this.removeFile(file);
+          }
+        };
+        for (let removeLink of file.previewElement.querySelectorAll("[data-dz-remove]"))
+          removeLink.addEventListener("click", removeFileEvent);
+      }
+    },
+    removedfile(file) {
+      if (file.previewElement != null && file.previewElement.parentNode != null)
+        file.previewElement.parentNode.removeChild(file.previewElement);
+      return this._updateMaxFilesReachedClass();
+    },
+    thumbnail(file, dataUrl) {
+      if (file.previewElement) {
+        file.previewElement.classList.remove("dz-file-preview");
+        for (let thumbnailElement of file.previewElement.querySelectorAll("[data-dz-thumbnail]")) {
+          thumbnailElement.alt = file.name;
+          thumbnailElement.src = dataUrl;
+        }
+        return setTimeout(() => file.previewElement.classList.add("dz-image-preview"), 1);
+      }
+    },
+    error(file, message) {
+      if (file.previewElement) {
+        file.previewElement.classList.add("dz-error");
+        if (typeof message !== "string" && message.error)
+          message = message.error;
+        for (let node of file.previewElement.querySelectorAll("[data-dz-errormessage]"))
+          node.textContent = message;
+      }
+    },
+    errormultiple() {
+    },
+    processing(file) {
+      if (file.previewElement) {
+        file.previewElement.classList.add("dz-processing");
+        if (file._removeLink)
+          return file._removeLink.innerHTML = this.options.dictCancelUpload;
+      }
+    },
+    processingmultiple() {
+    },
+    uploadprogress(file, progress, bytesSent) {
+      if (file.previewElement)
+        for (let node of file.previewElement.querySelectorAll("[data-dz-uploadprogress]"))
+          node.nodeName === "PROGRESS" ? node.value = progress : node.style.width = `${progress}%`;
+    },
+    totaluploadprogress() {
+    },
+    sending() {
+    },
+    sendingmultiple() {
+    },
+    success(file) {
+      if (file.previewElement)
+        return file.previewElement.classList.add("dz-success");
+    },
+    successmultiple() {
+    },
+    canceled(file) {
+      return this.emit("error", file, this.options.dictUploadCanceled);
+    },
+    canceledmultiple() {
+    },
+    complete(file) {
+      if (file._removeLink)
+        file._removeLink.innerHTML = this.options.dictRemoveFile;
+      if (file.previewElement)
+        return file.previewElement.classList.add("dz-complete");
+    },
+    completemultiple() {
+    },
+    maxfilesexceeded() {
+    },
+    maxfilesreached() {
+    },
+    queuecomplete() {
+    },
+    addedfiles() {
+    }
+  };
+  var $4ca367182776f80b$export$2e2bcd8739ae039 = $4ca367182776f80b$var$defaultOptions;
+  var $3ed269f2f0fb224b$export$2e2bcd8739ae039 = class extends $4040acfd8584338d$export$2e2bcd8739ae039 {
+    static initClass() {
+      this.prototype.Emitter = $4040acfd8584338d$export$2e2bcd8739ae039;
+      this.prototype.events = [
+        "drop",
+        "dragstart",
+        "dragend",
+        "dragenter",
+        "dragover",
+        "dragleave",
+        "addedfile",
+        "addedfiles",
+        "removedfile",
+        "thumbnail",
+        "error",
+        "errormultiple",
+        "processing",
+        "processingmultiple",
+        "uploadprogress",
+        "totaluploadprogress",
+        "sending",
+        "sendingmultiple",
+        "success",
+        "successmultiple",
+        "canceled",
+        "canceledmultiple",
+        "complete",
+        "completemultiple",
+        "reset",
+        "maxfilesexceeded",
+        "maxfilesreached",
+        "queuecomplete"
+      ];
+      this.prototype._thumbnailQueue = [];
+      this.prototype._processingThumbnail = false;
+    }
+    getAcceptedFiles() {
+      return this.files.filter((file) => file.accepted).map((file) => file);
+    }
+    getRejectedFiles() {
+      return this.files.filter((file) => !file.accepted).map((file) => file);
+    }
+    getFilesWithStatus(status) {
+      return this.files.filter((file) => file.status === status).map((file) => file);
+    }
+    getQueuedFiles() {
+      return this.getFilesWithStatus($3ed269f2f0fb224b$export$2e2bcd8739ae039.QUEUED);
+    }
+    getUploadingFiles() {
+      return this.getFilesWithStatus($3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING);
+    }
+    getAddedFiles() {
+      return this.getFilesWithStatus($3ed269f2f0fb224b$export$2e2bcd8739ae039.ADDED);
+    }
+    getActiveFiles() {
+      return this.files.filter((file) => file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING || file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.QUEUED).map((file) => file);
+    }
+    init() {
+      if (this.element.tagName === "form")
+        this.element.setAttribute("enctype", "multipart/form-data");
+      if (this.element.classList.contains("dropzone") && !this.element.querySelector(".dz-message"))
+        this.element.appendChild($3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement(`<div class="dz-default dz-message"><button class="dz-button" type="button">${this.options.dictDefaultMessage}</button></div>`));
+      if (this.clickableElements.length) {
+        let setupHiddenFileInput = () => {
+          if (this.hiddenFileInput)
+            this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput);
+          this.hiddenFileInput = document.createElement("input");
+          this.hiddenFileInput.setAttribute("type", "file");
+          if (this.options.maxFiles === null || this.options.maxFiles > 1)
+            this.hiddenFileInput.setAttribute("multiple", "multiple");
+          this.hiddenFileInput.className = "dz-hidden-input";
+          if (this.options.acceptedFiles !== null)
+            this.hiddenFileInput.setAttribute("accept", this.options.acceptedFiles);
+          if (this.options.capture !== null)
+            this.hiddenFileInput.setAttribute("capture", this.options.capture);
+          this.hiddenFileInput.setAttribute("tabindex", "-1");
+          this.hiddenFileInput.style.visibility = "hidden";
+          this.hiddenFileInput.style.position = "absolute";
+          this.hiddenFileInput.style.top = "0";
+          this.hiddenFileInput.style.left = "0";
+          this.hiddenFileInput.style.height = "0";
+          this.hiddenFileInput.style.width = "0";
+          $3ed269f2f0fb224b$export$2e2bcd8739ae039.getElement(this.options.hiddenInputContainer, "hiddenInputContainer").appendChild(this.hiddenFileInput);
+          this.hiddenFileInput.addEventListener("change", () => {
+            let { files } = this.hiddenFileInput;
+            if (files.length)
+              for (let file of files)
+                this.addFile(file);
+            this.emit("addedfiles", files);
+            setupHiddenFileInput();
+          });
+        };
+        setupHiddenFileInput();
+      }
+      this.URL = window.URL !== null ? window.URL : window.webkitURL;
+      for (let eventName of this.events)
+        this.on(eventName, this.options[eventName]);
+      this.on("uploadprogress", () => this.updateTotalUploadProgress());
+      this.on("removedfile", () => this.updateTotalUploadProgress());
+      this.on("canceled", (file) => this.emit("complete", file));
+      this.on("complete", (file) => {
+        if (this.getAddedFiles().length === 0 && this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0)
+          return setTimeout(() => this.emit("queuecomplete"), 0);
+      });
+      const containsFiles = function(e) {
+        if (e.dataTransfer.types)
+          for (var i = 0; i < e.dataTransfer.types.length; i++) {
+            if (e.dataTransfer.types[i] === "Files")
+              return true;
+          }
+        return false;
+      };
+      let noPropagation = function(e) {
+        if (!containsFiles(e))
+          return;
+        e.stopPropagation();
+        if (e.preventDefault)
+          return e.preventDefault();
+        else
+          return e.returnValue = false;
+      };
+      this.listeners = [
+        {
+          element: this.element,
+          events: {
+            dragstart: (e) => {
+              return this.emit("dragstart", e);
+            },
+            dragenter: (e) => {
+              noPropagation(e);
+              return this.emit("dragenter", e);
+            },
+            dragover: (e) => {
+              let efct;
+              try {
+                efct = e.dataTransfer.effectAllowed;
+              } catch (error2) {
+              }
+              e.dataTransfer.dropEffect = efct === "move" || efct === "linkMove" ? "move" : "copy";
+              noPropagation(e);
+              return this.emit("dragover", e);
+            },
+            dragleave: (e) => {
+              return this.emit("dragleave", e);
+            },
+            drop: (e) => {
+              noPropagation(e);
+              return this.drop(e);
+            },
+            dragend: (e) => {
+              return this.emit("dragend", e);
+            }
+          }
+        }
+      ];
+      this.clickableElements.forEach((clickableElement) => {
+        return this.listeners.push({
+          element: clickableElement,
+          events: {
+            click: (evt) => {
+              if (clickableElement !== this.element || evt.target === this.element || $3ed269f2f0fb224b$export$2e2bcd8739ae039.elementInside(evt.target, this.element.querySelector(".dz-message")))
+                this.hiddenFileInput.click();
+              return true;
+            }
+          }
+        });
+      });
+      this.enable();
+      return this.options.init.call(this);
+    }
+    destroy() {
+      this.disable();
+      this.removeAllFiles(true);
+      if (this.hiddenFileInput != null ? this.hiddenFileInput.parentNode : void 0) {
+        this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput);
+        this.hiddenFileInput = null;
+      }
+      delete this.element.dropzone;
+      return $3ed269f2f0fb224b$export$2e2bcd8739ae039.instances.splice($3ed269f2f0fb224b$export$2e2bcd8739ae039.instances.indexOf(this), 1);
+    }
+    updateTotalUploadProgress() {
+      let totalUploadProgress;
+      let totalBytesSent = 0;
+      let totalBytes = 0;
+      let activeFiles = this.getActiveFiles();
+      if (activeFiles.length) {
+        for (let file of this.getActiveFiles()) {
+          totalBytesSent += file.upload.bytesSent;
+          totalBytes += file.upload.total;
+        }
+        totalUploadProgress = 100 * totalBytesSent / totalBytes;
+      } else
+        totalUploadProgress = 100;
+      return this.emit("totaluploadprogress", totalUploadProgress, totalBytes, totalBytesSent);
+    }
+    _getParamName(n) {
+      if (typeof this.options.paramName === "function")
+        return this.options.paramName(n);
+      else
+        return `${this.options.paramName}${this.options.uploadMultiple ? `[${n}]` : ""}`;
+    }
+    _renameFile(file) {
+      if (typeof this.options.renameFile !== "function")
+        return file.name;
+      return this.options.renameFile(file);
+    }
+    getFallbackForm() {
+      let existingFallback, form;
+      if (existingFallback = this.getExistingFallback())
+        return existingFallback;
+      let fieldsString = '<div class="dz-fallback">';
+      if (this.options.dictFallbackText)
+        fieldsString += `<p>${this.options.dictFallbackText}</p>`;
+      fieldsString += `<input type="file" name="${this._getParamName(0)}" ${this.options.uploadMultiple ? 'multiple="multiple"' : void 0} /><input type="submit" value="Upload!"></div>`;
+      let fields = $3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement(fieldsString);
+      if (this.element.tagName !== "FORM") {
+        form = $3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement(`<form action="${this.options.url}" enctype="multipart/form-data" method="${this.options.method}"></form>`);
+        form.appendChild(fields);
+      } else {
+        this.element.setAttribute("enctype", "multipart/form-data");
+        this.element.setAttribute("method", this.options.method);
+      }
+      return form != null ? form : fields;
+    }
+    getExistingFallback() {
+      let getFallback = function(elements) {
+        for (let el of elements) {
+          if (/(^| )fallback($| )/.test(el.className))
+            return el;
+        }
+      };
+      for (let tagName of [
+        "div",
+        "form"
+      ]) {
+        var fallback;
+        if (fallback = getFallback(this.element.getElementsByTagName(tagName)))
+          return fallback;
+      }
+    }
+    setupEventListeners() {
+      return this.listeners.map((elementListeners) => (() => {
+        let result = [];
+        for (let event in elementListeners.events) {
+          let listener = elementListeners.events[event];
+          result.push(elementListeners.element.addEventListener(event, listener, false));
+        }
+        return result;
+      })());
+    }
+    removeEventListeners() {
+      return this.listeners.map((elementListeners) => (() => {
+        let result = [];
+        for (let event in elementListeners.events) {
+          let listener = elementListeners.events[event];
+          result.push(elementListeners.element.removeEventListener(event, listener, false));
+        }
+        return result;
+      })());
+    }
+    disable() {
+      this.clickableElements.forEach((element) => element.classList.remove("dz-clickable"));
+      this.removeEventListeners();
+      this.disabled = true;
+      return this.files.map((file) => this.cancelUpload(file));
+    }
+    enable() {
+      delete this.disabled;
+      this.clickableElements.forEach((element) => element.classList.add("dz-clickable"));
+      return this.setupEventListeners();
+    }
+    filesize(size) {
+      let selectedSize = 0;
+      let selectedUnit = "b";
+      if (size > 0) {
+        let units = [
+          "tb",
+          "gb",
+          "mb",
+          "kb",
+          "b"
+        ];
+        for (let i = 0; i < units.length; i++) {
+          let unit = units[i];
+          let cutoff = Math.pow(this.options.filesizeBase, 4 - i) / 10;
+          if (size >= cutoff) {
+            selectedSize = size / Math.pow(this.options.filesizeBase, 4 - i);
+            selectedUnit = unit;
+            break;
+          }
+        }
+        selectedSize = Math.round(10 * selectedSize) / 10;
+      }
+      return `<strong>${selectedSize}</strong> ${this.options.dictFileSizeUnits[selectedUnit]}`;
+    }
+    _updateMaxFilesReachedClass() {
+      if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
+        if (this.getAcceptedFiles().length === this.options.maxFiles)
+          this.emit("maxfilesreached", this.files);
+        return this.element.classList.add("dz-max-files-reached");
+      } else
+        return this.element.classList.remove("dz-max-files-reached");
+    }
+    drop(e) {
+      if (!e.dataTransfer)
+        return;
+      this.emit("drop", e);
+      let files = [];
+      for (let i = 0; i < e.dataTransfer.files.length; i++)
+        files[i] = e.dataTransfer.files[i];
+      if (files.length) {
+        let { items } = e.dataTransfer;
+        if (items && items.length && items[0].webkitGetAsEntry != null)
+          this._addFilesFromItems(items);
+        else
+          this.handleFiles(files);
+      }
+      this.emit("addedfiles", files);
+    }
+    paste(e) {
+      if ($3ed269f2f0fb224b$var$__guard__(e != null ? e.clipboardData : void 0, (x) => x.items) == null)
+        return;
+      this.emit("paste", e);
+      let { items } = e.clipboardData;
+      if (items.length)
+        return this._addFilesFromItems(items);
+    }
+    handleFiles(files) {
+      for (let file of files)
+        this.addFile(file);
+    }
+    _addFilesFromItems(items) {
+      return (() => {
+        let result = [];
+        for (let item of items) {
+          var entry;
+          if (item.webkitGetAsEntry != null && (entry = item.webkitGetAsEntry())) {
+            if (entry.isFile)
+              result.push(this.addFile(item.getAsFile()));
+            else if (entry.isDirectory)
+              result.push(this._addFilesFromDirectory(entry, entry.name));
+            else
+              result.push(void 0);
+          } else if (item.getAsFile != null) {
+            if (item.kind == null || item.kind === "file")
+              result.push(this.addFile(item.getAsFile()));
+            else
+              result.push(void 0);
+          } else
+            result.push(void 0);
+        }
+        return result;
+      })();
+    }
+    _addFilesFromDirectory(directory, path) {
+      let dirReader = directory.createReader();
+      let errorHandler = (error2) => $3ed269f2f0fb224b$var$__guardMethod__(console, "log", (o) => o.log(error2));
+      var readEntries = () => {
+        return dirReader.readEntries((entries) => {
+          if (entries.length > 0) {
+            for (let entry of entries) {
+              if (entry.isFile)
+                entry.file((file) => {
+                  if (this.options.ignoreHiddenFiles && file.name.substring(0, 1) === ".")
+                    return;
+                  file.fullPath = `${path}/${file.name}`;
+                  return this.addFile(file);
+                });
+              else if (entry.isDirectory)
+                this._addFilesFromDirectory(entry, `${path}/${entry.name}`);
+            }
+            readEntries();
+          }
+          return null;
+        }, errorHandler);
+      };
+      return readEntries();
+    }
+    accept(file, done) {
+      if (this.options.maxFilesize && file.size > this.options.maxFilesize * 1048576)
+        done(this.options.dictFileTooBig.replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100).replace("{{maxFilesize}}", this.options.maxFilesize));
+      else if (!$3ed269f2f0fb224b$export$2e2bcd8739ae039.isValidFile(file, this.options.acceptedFiles))
+        done(this.options.dictInvalidFileType);
+      else if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
+        done(this.options.dictMaxFilesExceeded.replace("{{maxFiles}}", this.options.maxFiles));
+        this.emit("maxfilesexceeded", file);
+      } else
+        this.options.accept.call(this, file, done);
+    }
+    addFile(file) {
+      file.upload = {
+        uuid: $3ed269f2f0fb224b$export$2e2bcd8739ae039.uuidv4(),
+        progress: 0,
+        total: file.size,
+        bytesSent: 0,
+        filename: this._renameFile(file)
+      };
+      this.files.push(file);
+      file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.ADDED;
+      this.emit("addedfile", file);
+      this._enqueueThumbnail(file);
+      this.accept(file, (error2) => {
+        if (error2) {
+          file.accepted = false;
+          this._errorProcessing([
+            file
+          ], error2);
+        } else {
+          file.accepted = true;
+          if (this.options.autoQueue)
+            this.enqueueFile(file);
+        }
+        this._updateMaxFilesReachedClass();
+      });
+    }
+    enqueueFiles(files) {
+      for (let file of files)
+        this.enqueueFile(file);
+      return null;
+    }
+    enqueueFile(file) {
+      if (file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.ADDED && file.accepted === true) {
+        file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.QUEUED;
+        if (this.options.autoProcessQueue)
+          return setTimeout(() => this.processQueue(), 0);
+      } else
+        throw new Error("This file can't be queued because it has already been processed or was rejected.");
+    }
+    _enqueueThumbnail(file) {
+      if (this.options.createImageThumbnails && file.type.match(/image.*/) && file.size <= this.options.maxThumbnailFilesize * 1048576) {
+        this._thumbnailQueue.push(file);
+        return setTimeout(() => this._processThumbnailQueue(), 0);
+      }
+    }
+    _processThumbnailQueue() {
+      if (this._processingThumbnail || this._thumbnailQueue.length === 0)
+        return;
+      this._processingThumbnail = true;
+      let file = this._thumbnailQueue.shift();
+      return this.createThumbnail(file, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.thumbnailMethod, true, (dataUrl) => {
+        this.emit("thumbnail", file, dataUrl);
+        this._processingThumbnail = false;
+        return this._processThumbnailQueue();
+      });
+    }
+    removeFile(file) {
+      if (file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING)
+        this.cancelUpload(file);
+      this.files = $3ed269f2f0fb224b$var$without(this.files, file);
+      this.emit("removedfile", file);
+      if (this.files.length === 0)
+        return this.emit("reset");
+    }
+    removeAllFiles(cancelIfNecessary) {
+      if (cancelIfNecessary == null)
+        cancelIfNecessary = false;
+      for (let file of this.files.slice())
+        if (file.status !== $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING || cancelIfNecessary)
+          this.removeFile(file);
+      return null;
+    }
+    resizeImage(file, width, height, resizeMethod, callback) {
+      return this.createThumbnail(file, width, height, resizeMethod, true, (dataUrl, canvas) => {
+        if (canvas == null)
+          return callback(file);
+        else {
+          let { resizeMimeType } = this.options;
+          if (resizeMimeType == null)
+            resizeMimeType = file.type;
+          let resizedDataURL = canvas.toDataURL(resizeMimeType, this.options.resizeQuality);
+          if (resizeMimeType === "image/jpeg" || resizeMimeType === "image/jpg")
+            resizedDataURL = $3ed269f2f0fb224b$var$ExifRestore.restore(file.dataURL, resizedDataURL);
+          return callback($3ed269f2f0fb224b$export$2e2bcd8739ae039.dataURItoBlob(resizedDataURL));
+        }
+      });
+    }
+    createThumbnail(file, width, height, resizeMethod, fixOrientation, callback) {
+      let fileReader = new FileReader();
+      fileReader.onload = () => {
+        file.dataURL = fileReader.result;
+        if (file.type === "image/svg+xml") {
+          if (callback != null)
+            callback(fileReader.result);
+          return;
+        }
+        this.createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback);
+      };
+      fileReader.readAsDataURL(file);
+    }
+    displayExistingFile(mockFile, imageUrl, callback, crossOrigin, resizeThumbnail = true) {
+      this.emit("addedfile", mockFile);
+      this.emit("complete", mockFile);
+      if (!resizeThumbnail) {
+        this.emit("thumbnail", mockFile, imageUrl);
+        if (callback)
+          callback();
+      } else {
+        let onDone = (thumbnail) => {
+          this.emit("thumbnail", mockFile, thumbnail);
+          if (callback)
+            callback();
+        };
+        mockFile.dataURL = imageUrl;
+        this.createThumbnailFromUrl(mockFile, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.thumbnailMethod, this.options.fixOrientation, onDone, crossOrigin);
+      }
+    }
+    createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback, crossOrigin) {
+      let img = document.createElement("img");
+      if (crossOrigin)
+        img.crossOrigin = crossOrigin;
+      fixOrientation = getComputedStyle(document.body)["imageOrientation"] == "from-image" ? false : fixOrientation;
+      img.onload = () => {
+        let loadExif = (callback2) => callback2(1);
+        if (typeof EXIF !== "undefined" && EXIF !== null && fixOrientation)
+          loadExif = (callback2) => EXIF.getData(img, function() {
+            return callback2(EXIF.getTag(this, "Orientation"));
+          });
+        return loadExif((orientation) => {
+          file.width = img.width;
+          file.height = img.height;
+          let resizeInfo = this.options.resize.call(this, file, width, height, resizeMethod);
+          let canvas = document.createElement("canvas");
+          let ctx = canvas.getContext("2d");
+          canvas.width = resizeInfo.trgWidth;
+          canvas.height = resizeInfo.trgHeight;
+          if (orientation > 4) {
+            canvas.width = resizeInfo.trgHeight;
+            canvas.height = resizeInfo.trgWidth;
+          }
+          switch (orientation) {
+            case 2:
+              ctx.translate(canvas.width, 0);
+              ctx.scale(-1, 1);
+              break;
+            case 3:
+              ctx.translate(canvas.width, canvas.height);
+              ctx.rotate(Math.PI);
+              break;
+            case 4:
+              ctx.translate(0, canvas.height);
+              ctx.scale(1, -1);
+              break;
+            case 5:
+              ctx.rotate(0.5 * Math.PI);
+              ctx.scale(1, -1);
+              break;
+            case 6:
+              ctx.rotate(0.5 * Math.PI);
+              ctx.translate(0, -canvas.width);
+              break;
+            case 7:
+              ctx.rotate(0.5 * Math.PI);
+              ctx.translate(canvas.height, -canvas.width);
+              ctx.scale(-1, 1);
+              break;
+            case 8:
+              ctx.rotate(-0.5 * Math.PI);
+              ctx.translate(-canvas.height, 0);
+              break;
+          }
+          $3ed269f2f0fb224b$var$drawImageIOSFix(ctx, img, resizeInfo.srcX != null ? resizeInfo.srcX : 0, resizeInfo.srcY != null ? resizeInfo.srcY : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, resizeInfo.trgX != null ? resizeInfo.trgX : 0, resizeInfo.trgY != null ? resizeInfo.trgY : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
+          let thumbnail = canvas.toDataURL("image/png");
+          if (callback != null)
+            return callback(thumbnail, canvas);
+        });
+      };
+      if (callback != null)
+        img.onerror = callback;
+      return img.src = file.dataURL;
+    }
+    processQueue() {
+      let { parallelUploads } = this.options;
+      let processingLength = this.getUploadingFiles().length;
+      let i = processingLength;
+      if (processingLength >= parallelUploads)
+        return;
+      let queuedFiles = this.getQueuedFiles();
+      if (!(queuedFiles.length > 0))
+        return;
+      if (this.options.uploadMultiple)
+        return this.processFiles(queuedFiles.slice(0, parallelUploads - processingLength));
+      else
+        while (i < parallelUploads) {
+          if (!queuedFiles.length)
+            return;
+          this.processFile(queuedFiles.shift());
+          i++;
+        }
+    }
+    processFile(file) {
+      return this.processFiles([
+        file
+      ]);
+    }
+    processFiles(files) {
+      for (let file of files) {
+        file.processing = true;
+        file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING;
+        this.emit("processing", file);
+      }
+      if (this.options.uploadMultiple)
+        this.emit("processingmultiple", files);
+      return this.uploadFiles(files);
+    }
+    _getFilesWithXhr(xhr) {
+      let files;
+      return files = this.files.filter((file) => file.xhr === xhr).map((file) => file);
+    }
+    cancelUpload(file) {
+      if (file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING) {
+        let groupedFiles = this._getFilesWithXhr(file.xhr);
+        for (let groupedFile of groupedFiles)
+          groupedFile.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.CANCELED;
+        if (typeof file.xhr !== "undefined")
+          file.xhr.abort();
+        for (let groupedFile1 of groupedFiles)
+          this.emit("canceled", groupedFile1);
+        if (this.options.uploadMultiple)
+          this.emit("canceledmultiple", groupedFiles);
+      } else if (file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.ADDED || file.status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.QUEUED) {
+        file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.CANCELED;
+        this.emit("canceled", file);
+        if (this.options.uploadMultiple)
+          this.emit("canceledmultiple", [
+            file
+          ]);
+      }
+      if (this.options.autoProcessQueue)
+        return this.processQueue();
+    }
+    resolveOption(option, ...args) {
+      if (typeof option === "function")
+        return option.apply(this, args);
+      return option;
+    }
+    uploadFile(file) {
+      return this.uploadFiles([
+        file
+      ]);
+    }
+    uploadFiles(files) {
+      this._transformFiles(files, (transformedFiles) => {
+        if (this.options.chunking) {
+          let transformedFile = transformedFiles[0];
+          files[0].upload.chunked = this.options.chunking && (this.options.forceChunking || transformedFile.size > this.options.chunkSize);
+          files[0].upload.totalChunkCount = Math.ceil(transformedFile.size / this.options.chunkSize);
+        }
+        if (files[0].upload.chunked) {
+          let file = files[0];
+          let transformedFile = transformedFiles[0];
+          let startedChunkCount = 0;
+          file.upload.chunks = [];
+          let handleNextChunk = () => {
+            let chunkIndex = 0;
+            while (file.upload.chunks[chunkIndex] !== void 0)
+              chunkIndex++;
+            if (chunkIndex >= file.upload.totalChunkCount)
+              return;
+            startedChunkCount++;
+            let start4 = chunkIndex * this.options.chunkSize;
+            let end2 = Math.min(start4 + this.options.chunkSize, transformedFile.size);
+            let dataBlock = {
+              name: this._getParamName(0),
+              data: transformedFile.webkitSlice ? transformedFile.webkitSlice(start4, end2) : transformedFile.slice(start4, end2),
+              filename: file.upload.filename,
+              chunkIndex
+            };
+            file.upload.chunks[chunkIndex] = {
+              file,
+              index: chunkIndex,
+              dataBlock,
+              status: $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING,
+              progress: 0,
+              retries: 0
+            };
+            this._uploadData(files, [
+              dataBlock
+            ]);
+          };
+          file.upload.finishedChunkUpload = (chunk, response) => {
+            let allFinished = true;
+            chunk.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.SUCCESS;
+            chunk.dataBlock = null;
+            chunk.response = chunk.xhr.responseText;
+            chunk.responseHeaders = chunk.xhr.getAllResponseHeaders();
+            chunk.xhr = null;
+            for (let i = 0; i < file.upload.totalChunkCount; i++) {
+              if (file.upload.chunks[i] === void 0)
+                return handleNextChunk();
+              if (file.upload.chunks[i].status !== $3ed269f2f0fb224b$export$2e2bcd8739ae039.SUCCESS)
+                allFinished = false;
+            }
+            if (allFinished)
+              this.options.chunksUploaded(file, () => {
+                this._finished(files, response, null);
+              });
+          };
+          if (this.options.parallelChunkUploads)
+            for (let i = 0; i < file.upload.totalChunkCount; i++)
+              handleNextChunk();
+          else
+            handleNextChunk();
+        } else {
+          let dataBlocks = [];
+          for (let i = 0; i < files.length; i++)
+            dataBlocks[i] = {
+              name: this._getParamName(i),
+              data: transformedFiles[i],
+              filename: files[i].upload.filename
+            };
+          this._uploadData(files, dataBlocks);
+        }
+      });
+    }
+    _getChunk(file, xhr) {
+      for (let i = 0; i < file.upload.totalChunkCount; i++) {
+        if (file.upload.chunks[i] !== void 0 && file.upload.chunks[i].xhr === xhr)
+          return file.upload.chunks[i];
+      }
+    }
+    _uploadData(files, dataBlocks) {
+      let xhr = new XMLHttpRequest();
+      for (let file of files)
+        file.xhr = xhr;
+      if (files[0].upload.chunked)
+        files[0].upload.chunks[dataBlocks[0].chunkIndex].xhr = xhr;
+      let method = this.resolveOption(this.options.method, files, dataBlocks);
+      let url = this.resolveOption(this.options.url, files, dataBlocks);
+      xhr.open(method, url, true);
+      let timeout = this.resolveOption(this.options.timeout, files);
+      if (timeout)
+        xhr.timeout = this.resolveOption(this.options.timeout, files);
+      xhr.withCredentials = !!this.options.withCredentials;
+      xhr.onload = (e) => {
+        this._finishedUploading(files, xhr, e);
+      };
+      xhr.ontimeout = () => {
+        this._handleUploadError(files, xhr, `Request timedout after ${this.options.timeout / 1e3} seconds`);
+      };
+      xhr.onerror = () => {
+        this._handleUploadError(files, xhr);
+      };
+      let progressObj = xhr.upload != null ? xhr.upload : xhr;
+      progressObj.onprogress = (e) => this._updateFilesUploadProgress(files, xhr, e);
+      let headers = this.options.defaultHeaders ? {
+        Accept: "application/json",
+        "Cache-Control": "no-cache",
+        "X-Requested-With": "XMLHttpRequest"
+      } : {};
+      if (this.options.binaryBody)
+        headers["Content-Type"] = files[0].type;
+      if (this.options.headers)
+        objectExtend(headers, this.options.headers);
+      for (let headerName in headers) {
+        let headerValue = headers[headerName];
+        if (headerValue)
+          xhr.setRequestHeader(headerName, headerValue);
+      }
+      if (this.options.binaryBody) {
+        for (let file of files)
+          this.emit("sending", file, xhr);
+        if (this.options.uploadMultiple)
+          this.emit("sendingmultiple", files, xhr);
+        this.submitRequest(xhr, null, files);
+      } else {
+        let formData = new FormData();
+        if (this.options.params) {
+          let additionalParams = this.options.params;
+          if (typeof additionalParams === "function")
+            additionalParams = additionalParams.call(this, files, xhr, files[0].upload.chunked ? this._getChunk(files[0], xhr) : null);
+          for (let key in additionalParams) {
+            let value = additionalParams[key];
+            if (Array.isArray(value))
+              for (let i = 0; i < value.length; i++)
+                formData.append(key, value[i]);
+            else
+              formData.append(key, value);
+          }
+        }
+        for (let file of files)
+          this.emit("sending", file, xhr, formData);
+        if (this.options.uploadMultiple)
+          this.emit("sendingmultiple", files, xhr, formData);
+        this._addFormElementData(formData);
+        for (let i = 0; i < dataBlocks.length; i++) {
+          let dataBlock = dataBlocks[i];
+          formData.append(dataBlock.name, dataBlock.data, dataBlock.filename);
+        }
+        this.submitRequest(xhr, formData, files);
+      }
+    }
+    _transformFiles(files, done) {
+      let transformedFiles = [];
+      let doneCounter = 0;
+      for (let i = 0; i < files.length; i++)
+        this.options.transformFile.call(this, files[i], (transformedFile) => {
+          transformedFiles[i] = transformedFile;
+          if (++doneCounter === files.length)
+            done(transformedFiles);
+        });
+    }
+    _addFormElementData(formData) {
+      if (this.element.tagName === "FORM")
+        for (let input of this.element.querySelectorAll("input, textarea, select, button")) {
+          let inputName = input.getAttribute("name");
+          let inputType = input.getAttribute("type");
+          if (inputType)
+            inputType = inputType.toLowerCase();
+          if (typeof inputName === "undefined" || inputName === null)
+            continue;
+          if (input.tagName === "SELECT" && input.hasAttribute("multiple")) {
+            for (let option of input.options)
+              if (option.selected)
+                formData.append(inputName, option.value);
+          } else if (!inputType || inputType !== "checkbox" && inputType !== "radio" || input.checked)
+            formData.append(inputName, input.value);
+        }
+    }
+    _updateFilesUploadProgress(files, xhr, e) {
+      if (!files[0].upload.chunked)
+        for (let file of files) {
+          if (file.upload.total && file.upload.bytesSent && file.upload.bytesSent == file.upload.total)
+            continue;
+          if (e) {
+            file.upload.progress = 100 * e.loaded / e.total;
+            file.upload.total = e.total;
+            file.upload.bytesSent = e.loaded;
+          } else {
+            file.upload.progress = 100;
+            file.upload.bytesSent = file.upload.total;
+          }
+          this.emit("uploadprogress", file, file.upload.progress, file.upload.bytesSent);
+        }
+      else {
+        let file = files[0];
+        let chunk = this._getChunk(file, xhr);
+        if (e) {
+          chunk.progress = 100 * e.loaded / e.total;
+          chunk.total = e.total;
+          chunk.bytesSent = e.loaded;
+        } else {
+          chunk.progress = 100;
+          chunk.bytesSent = chunk.total;
+        }
+        file.upload.progress = 0;
+        file.upload.total = 0;
+        file.upload.bytesSent = 0;
+        for (let i = 0; i < file.upload.totalChunkCount; i++)
+          if (file.upload.chunks[i] && typeof file.upload.chunks[i].progress !== "undefined") {
+            file.upload.progress += file.upload.chunks[i].progress;
+            file.upload.total += file.upload.chunks[i].total;
+            file.upload.bytesSent += file.upload.chunks[i].bytesSent;
+          }
+        file.upload.progress = file.upload.progress / file.upload.totalChunkCount;
+        this.emit("uploadprogress", file, file.upload.progress, file.upload.bytesSent);
+      }
+    }
+    _finishedUploading(files, xhr, e) {
+      let response;
+      if (files[0].status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.CANCELED)
+        return;
+      if (xhr.readyState !== 4)
+        return;
+      if (xhr.responseType !== "arraybuffer" && xhr.responseType !== "blob") {
+        response = xhr.responseText;
+        if (xhr.getResponseHeader("content-type") && ~xhr.getResponseHeader("content-type").indexOf("application/json"))
+          try {
+            response = JSON.parse(response);
+          } catch (error2) {
+            e = error2;
+            response = "Invalid JSON response from server.";
+          }
+      }
+      this._updateFilesUploadProgress(files, xhr);
+      if (!(200 <= xhr.status && xhr.status < 300))
+        this._handleUploadError(files, xhr, response);
+      else if (files[0].upload.chunked)
+        files[0].upload.finishedChunkUpload(this._getChunk(files[0], xhr), response);
+      else
+        this._finished(files, response, e);
+    }
+    _handleUploadError(files, xhr, response) {
+      if (files[0].status === $3ed269f2f0fb224b$export$2e2bcd8739ae039.CANCELED)
+        return;
+      if (files[0].upload.chunked && this.options.retryChunks) {
+        let chunk = this._getChunk(files[0], xhr);
+        if (chunk.retries++ < this.options.retryChunksLimit) {
+          this._uploadData(files, [
+            chunk.dataBlock
+          ]);
+          return;
+        } else
+          console.warn("Retried this chunk too often. Giving up.");
+      }
+      this._errorProcessing(files, response || this.options.dictResponseError.replace("{{statusCode}}", xhr.status), xhr);
+    }
+    submitRequest(xhr, formData, files) {
+      if (xhr.readyState != 1) {
+        console.warn("Cannot send this request because the XMLHttpRequest.readyState is not OPENED.");
+        return;
+      }
+      if (this.options.binaryBody) {
+        if (files[0].upload.chunked) {
+          const chunk = this._getChunk(files[0], xhr);
+          xhr.send(chunk.dataBlock.data);
+        } else
+          xhr.send(files[0]);
+      } else
+        xhr.send(formData);
+    }
+    _finished(files, responseText, e) {
+      for (let file of files) {
+        file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.SUCCESS;
+        this.emit("success", file, responseText, e);
+        this.emit("complete", file);
+      }
+      if (this.options.uploadMultiple) {
+        this.emit("successmultiple", files, responseText, e);
+        this.emit("completemultiple", files);
+      }
+      if (this.options.autoProcessQueue)
+        return this.processQueue();
+    }
+    _errorProcessing(files, message, xhr) {
+      for (let file of files) {
+        file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.ERROR;
+        this.emit("error", file, message, xhr);
+        this.emit("complete", file);
+      }
+      if (this.options.uploadMultiple) {
+        this.emit("errormultiple", files, message, xhr);
+        this.emit("completemultiple", files);
+      }
+      if (this.options.autoProcessQueue)
+        return this.processQueue();
+    }
+    static uuidv4() {
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+        let r = Math.random() * 16 | 0, v = c === "x" ? r : r & 3 | 8;
+        return v.toString(16);
+      });
+    }
+    constructor(el, options) {
+      super();
+      let fallback, left2;
+      this.element = el;
+      this.clickableElements = [];
+      this.listeners = [];
+      this.files = [];
+      if (typeof this.element === "string")
+        this.element = document.querySelector(this.element);
+      if (!this.element || this.element.nodeType == null)
+        throw new Error("Invalid dropzone element.");
+      if (this.element.dropzone)
+        throw new Error("Dropzone already attached.");
+      $3ed269f2f0fb224b$export$2e2bcd8739ae039.instances.push(this);
+      this.element.dropzone = this;
+      let elementOptions = (left2 = $3ed269f2f0fb224b$export$2e2bcd8739ae039.optionsForElement(this.element)) != null ? left2 : {};
+      this.options = objectExtend(true, {}, $4ca367182776f80b$export$2e2bcd8739ae039, elementOptions, options != null ? options : {});
+      this.options.previewTemplate = this.options.previewTemplate.replace(/\n*/g, "");
+      if (this.options.forceFallback || !$3ed269f2f0fb224b$export$2e2bcd8739ae039.isBrowserSupported())
+        return this.options.fallback.call(this);
+      if (this.options.url == null)
+        this.options.url = this.element.getAttribute("action");
+      if (!this.options.url)
+        throw new Error("No URL provided.");
+      if (this.options.acceptedFiles && this.options.acceptedMimeTypes)
+        throw new Error("You can't provide both 'acceptedFiles' and 'acceptedMimeTypes'. 'acceptedMimeTypes' is deprecated.");
+      if (this.options.uploadMultiple && this.options.chunking)
+        throw new Error("You cannot set both: uploadMultiple and chunking.");
+      if (this.options.binaryBody && this.options.uploadMultiple)
+        throw new Error("You cannot set both: binaryBody and uploadMultiple.");
+      if (this.options.acceptedMimeTypes) {
+        this.options.acceptedFiles = this.options.acceptedMimeTypes;
+        delete this.options.acceptedMimeTypes;
+      }
+      if (this.options.renameFilename != null)
+        this.options.renameFile = (file) => this.options.renameFilename.call(this, file.name, file);
+      if (typeof this.options.method === "string")
+        this.options.method = this.options.method.toUpperCase();
+      if ((fallback = this.getExistingFallback()) && fallback.parentNode)
+        fallback.parentNode.removeChild(fallback);
+      if (this.options.previewsContainer !== false) {
+        if (this.options.previewsContainer)
+          this.previewsContainer = $3ed269f2f0fb224b$export$2e2bcd8739ae039.getElement(this.options.previewsContainer, "previewsContainer");
+        else
+          this.previewsContainer = this.element;
+      }
+      if (this.options.clickable) {
+        if (this.options.clickable === true)
+          this.clickableElements = [
+            this.element
+          ];
+        else
+          this.clickableElements = $3ed269f2f0fb224b$export$2e2bcd8739ae039.getElements(this.options.clickable, "clickable");
+      }
+      this.init();
+    }
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.initClass();
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.options = {};
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.optionsForElement = function(element) {
+    if (element.getAttribute("id"))
+      return $3ed269f2f0fb224b$export$2e2bcd8739ae039.options[$3ed269f2f0fb224b$var$camelize(element.getAttribute("id"))];
+    else
+      return void 0;
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.instances = [];
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.forElement = function(element) {
+    if (typeof element === "string")
+      element = document.querySelector(element);
+    if ((element != null ? element.dropzone : void 0) == null)
+      throw new Error("No Dropzone found for given element. This is probably because you're trying to access it before Dropzone had the time to initialize. Use the `init` option to setup any additional observers on your Dropzone.");
+    return element.dropzone;
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.discover = function() {
+    let dropzones;
+    if (document.querySelectorAll)
+      dropzones = document.querySelectorAll(".dropzone");
+    else {
+      dropzones = [];
+      let checkElements = (elements) => (() => {
+        let result = [];
+        for (let el of elements)
+          if (/(^| )dropzone($| )/.test(el.className))
+            result.push(dropzones.push(el));
+          else
+            result.push(void 0);
+        return result;
+      })();
+      checkElements(document.getElementsByTagName("div"));
+      checkElements(document.getElementsByTagName("form"));
+    }
+    return (() => {
+      let result = [];
+      for (let dropzone of dropzones)
+        if ($3ed269f2f0fb224b$export$2e2bcd8739ae039.optionsForElement(dropzone) !== false)
+          result.push(new $3ed269f2f0fb224b$export$2e2bcd8739ae039(dropzone));
+        else
+          result.push(void 0);
+      return result;
+    })();
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.blockedBrowsers = [
+    /opera.*(Macintosh|Windows Phone).*version\/12/i
+  ];
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.isBrowserSupported = function() {
+    let capableBrowser = true;
+    if (window.File && window.FileReader && window.FileList && window.Blob && window.FormData && document.querySelector) {
+      if (!("classList" in document.createElement("a")))
+        capableBrowser = false;
+      else {
+        if ($3ed269f2f0fb224b$export$2e2bcd8739ae039.blacklistedBrowsers !== void 0)
+          $3ed269f2f0fb224b$export$2e2bcd8739ae039.blockedBrowsers = $3ed269f2f0fb224b$export$2e2bcd8739ae039.blacklistedBrowsers;
+        for (let regex of $3ed269f2f0fb224b$export$2e2bcd8739ae039.blockedBrowsers)
+          if (regex.test(navigator.userAgent)) {
+            capableBrowser = false;
+            continue;
+          }
+      }
+    } else
+      capableBrowser = false;
+    return capableBrowser;
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.dataURItoBlob = function(dataURI) {
+    let byteString = atob(dataURI.split(",")[1]);
+    let mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+    let ab = new ArrayBuffer(byteString.length);
+    let ia = new Uint8Array(ab);
+    for (let i = 0, end2 = byteString.length, asc = 0 <= end2; asc ? i <= end2 : i >= end2; asc ? i++ : i--)
+      ia[i] = byteString.charCodeAt(i);
+    return new Blob([
+      ab
+    ], {
+      type: mimeString
+    });
+  };
+  var $3ed269f2f0fb224b$var$without = (list, rejectedItem) => list.filter((item) => item !== rejectedItem).map((item) => item);
+  var $3ed269f2f0fb224b$var$camelize = (str) => str.replace(/[\-_](\w)/g, (match) => match.charAt(1).toUpperCase());
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.createElement = function(string) {
+    let div = document.createElement("div");
+    div.innerHTML = string;
+    return div.childNodes[0];
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.elementInside = function(element, container) {
+    if (element === container)
+      return true;
+    while (element = element.parentNode) {
+      if (element === container)
+        return true;
+    }
+    return false;
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.getElement = function(el, name) {
+    let element;
+    if (typeof el === "string")
+      element = document.querySelector(el);
+    else if (el.nodeType != null)
+      element = el;
+    if (element == null)
+      throw new Error(`Invalid \`${name}\` option provided. Please provide a CSS selector or a plain HTML element.`);
+    return element;
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.getElements = function(els, name) {
+    let el, elements;
+    if (els instanceof Array) {
+      elements = [];
+      try {
+        for (el of els)
+          elements.push(this.getElement(el, name));
+      } catch (e) {
+        elements = null;
+      }
+    } else if (typeof els === "string") {
+      elements = [];
+      for (el of document.querySelectorAll(els))
+        elements.push(el);
+    } else if (els.nodeType != null)
+      elements = [
+        els
+      ];
+    if (elements == null || !elements.length)
+      throw new Error(`Invalid \`${name}\` option provided. Please provide a CSS selector, a plain HTML element or a list of those.`);
+    return elements;
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.confirm = function(question, accepted, rejected) {
+    if (window.confirm(question))
+      return accepted();
+    else if (rejected != null)
+      return rejected();
+  };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.isValidFile = function(file, acceptedFiles) {
+    if (!acceptedFiles)
+      return true;
+    acceptedFiles = acceptedFiles.split(",");
+    let mimeType = file.type;
+    let baseMimeType = mimeType.replace(/\/.*$/, "");
+    for (let validType of acceptedFiles) {
+      validType = validType.trim();
+      if (validType.charAt(0) === ".") {
+        if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1)
+          return true;
+      } else if (/\/\*$/.test(validType)) {
+        if (baseMimeType === validType.replace(/\/.*$/, ""))
+          return true;
+      } else {
+        if (mimeType === validType)
+          return true;
+      }
+    }
+    return false;
+  };
+  if (typeof jQuery !== "undefined" && jQuery !== null)
+    jQuery.fn.dropzone = function(options) {
+      return this.each(function() {
+        return new $3ed269f2f0fb224b$export$2e2bcd8739ae039(this, options);
+      });
+    };
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.ADDED = "added";
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.QUEUED = "queued";
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.ACCEPTED = $3ed269f2f0fb224b$export$2e2bcd8739ae039.QUEUED;
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING = "uploading";
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.PROCESSING = $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING;
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.CANCELED = "canceled";
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.ERROR = "error";
+  $3ed269f2f0fb224b$export$2e2bcd8739ae039.SUCCESS = "success";
+  var $3ed269f2f0fb224b$var$detectVerticalSquash = function(img) {
+    let iw = img.naturalWidth;
+    let ih = img.naturalHeight;
+    let canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = ih;
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    let { data } = ctx.getImageData(1, 0, 1, ih);
+    let sy = 0;
+    let ey = ih;
+    let py = ih;
+    while (py > sy) {
+      let alpha = data[(py - 1) * 4 + 3];
+      if (alpha === 0)
+        ey = py;
+      else
+        sy = py;
+      py = ey + sy >> 1;
+    }
+    let ratio = py / ih;
+    if (ratio === 0)
+      return 1;
+    else
+      return ratio;
+  };
+  var $3ed269f2f0fb224b$var$drawImageIOSFix = function(ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
+    let vertSquashRatio = $3ed269f2f0fb224b$var$detectVerticalSquash(img);
+    return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
+  };
+  var $3ed269f2f0fb224b$var$ExifRestore = class {
+    static initClass() {
+      this.KEY_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    }
+    static encode64(input) {
+      let output = "";
+      let chr1 = void 0;
+      let chr2 = void 0;
+      let chr3 = "";
+      let enc1 = void 0;
+      let enc2 = void 0;
+      let enc3 = void 0;
+      let enc4 = "";
+      let i = 0;
+      while (true) {
+        chr1 = input[i++];
+        chr2 = input[i++];
+        chr3 = input[i++];
+        enc1 = chr1 >> 2;
+        enc2 = (chr1 & 3) << 4 | chr2 >> 4;
+        enc3 = (chr2 & 15) << 2 | chr3 >> 6;
+        enc4 = chr3 & 63;
+        if (isNaN(chr2))
+          enc3 = enc4 = 64;
+        else if (isNaN(chr3))
+          enc4 = 64;
+        output = output + this.KEY_STR.charAt(enc1) + this.KEY_STR.charAt(enc2) + this.KEY_STR.charAt(enc3) + this.KEY_STR.charAt(enc4);
+        chr1 = chr2 = chr3 = "";
+        enc1 = enc2 = enc3 = enc4 = "";
+        if (!(i < input.length))
+          break;
+      }
+      return output;
+    }
+    static restore(origFileBase64, resizedFileBase64) {
+      if (!origFileBase64.match("data:image/jpeg;base64,"))
+        return resizedFileBase64;
+      let rawImage = this.decode64(origFileBase64.replace("data:image/jpeg;base64,", ""));
+      let segments = this.slice2Segments(rawImage);
+      let image = this.exifManipulation(resizedFileBase64, segments);
+      return `data:image/jpeg;base64,${this.encode64(image)}`;
+    }
+    static exifManipulation(resizedFileBase64, segments) {
+      let exifArray = this.getExifArray(segments);
+      let newImageArray = this.insertExif(resizedFileBase64, exifArray);
+      let aBuffer = new Uint8Array(newImageArray);
+      return aBuffer;
+    }
+    static getExifArray(segments) {
+      let seg = void 0;
+      let x = 0;
+      while (x < segments.length) {
+        seg = segments[x];
+        if (seg[0] === 255 & seg[1] === 225)
+          return seg;
+        x++;
+      }
+      return [];
+    }
+    static insertExif(resizedFileBase64, exifArray) {
+      let imageData = resizedFileBase64.replace("data:image/jpeg;base64,", "");
+      let buf = this.decode64(imageData);
+      let separatePoint = buf.indexOf(255, 3);
+      let mae = buf.slice(0, separatePoint);
+      let ato = buf.slice(separatePoint);
+      let array = mae;
+      array = array.concat(exifArray);
+      array = array.concat(ato);
+      return array;
+    }
+    static slice2Segments(rawImageArray) {
+      let head = 0;
+      let segments = [];
+      while (true) {
+        var length;
+        if (rawImageArray[head] === 255 & rawImageArray[head + 1] === 218)
+          break;
+        if (rawImageArray[head] === 255 & rawImageArray[head + 1] === 216)
+          head += 2;
+        else {
+          length = rawImageArray[head + 2] * 256 + rawImageArray[head + 3];
+          let endPoint = head + length + 2;
+          let seg = rawImageArray.slice(head, endPoint);
+          segments.push(seg);
+          head = endPoint;
+        }
+        if (head > rawImageArray.length)
+          break;
+      }
+      return segments;
+    }
+    static decode64(input) {
+      let output = "";
+      let chr1 = void 0;
+      let chr2 = void 0;
+      let chr3 = "";
+      let enc1 = void 0;
+      let enc2 = void 0;
+      let enc3 = void 0;
+      let enc4 = "";
+      let i = 0;
+      let buf = [];
+      let base64test = /[^A-Za-z0-9\+\/\=]/g;
+      if (base64test.exec(input))
+        console.warn("There were invalid base64 characters in the input text.\nValid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\nExpect errors in decoding.");
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+      while (true) {
+        enc1 = this.KEY_STR.indexOf(input.charAt(i++));
+        enc2 = this.KEY_STR.indexOf(input.charAt(i++));
+        enc3 = this.KEY_STR.indexOf(input.charAt(i++));
+        enc4 = this.KEY_STR.indexOf(input.charAt(i++));
+        chr1 = enc1 << 2 | enc2 >> 4;
+        chr2 = (enc2 & 15) << 4 | enc3 >> 2;
+        chr3 = (enc3 & 3) << 6 | enc4;
+        buf.push(chr1);
+        if (enc3 !== 64)
+          buf.push(chr2);
+        if (enc4 !== 64)
+          buf.push(chr3);
+        chr1 = chr2 = chr3 = "";
+        enc1 = enc2 = enc3 = enc4 = "";
+        if (!(i < input.length))
+          break;
+      }
+      return buf;
+    }
+  };
+  $3ed269f2f0fb224b$var$ExifRestore.initClass();
+  function $3ed269f2f0fb224b$var$__guard__(value, transform) {
+    return typeof value !== "undefined" && value !== null ? transform(value) : void 0;
+  }
+  function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
+    if (typeof obj !== "undefined" && obj !== null && typeof obj[methodName] === "function")
+      return transform(obj, methodName);
+    else
+      return void 0;
+  }
+
+  // node_modules/@rails/activestorage/app/assets/javascripts/activestorage.esm.js
+  var sparkMd5 = {
+    exports: {}
+  };
+  (function(module, exports) {
+    (function(factory) {
+      {
+        module.exports = factory();
+      }
+    })(function(undefined$1) {
+      var hex_chr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+      function md5cycle(x, k) {
+        var a = x[0], b = x[1], c = x[2], d = x[3];
+        a += (b & c | ~b & d) + k[0] - 680876936 | 0;
+        a = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[1] - 389564586 | 0;
+        d = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[2] + 606105819 | 0;
+        c = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[3] - 1044525330 | 0;
+        b = (b << 22 | b >>> 10) + c | 0;
+        a += (b & c | ~b & d) + k[4] - 176418897 | 0;
+        a = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[5] + 1200080426 | 0;
+        d = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[6] - 1473231341 | 0;
+        c = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[7] - 45705983 | 0;
+        b = (b << 22 | b >>> 10) + c | 0;
+        a += (b & c | ~b & d) + k[8] + 1770035416 | 0;
+        a = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[9] - 1958414417 | 0;
+        d = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[10] - 42063 | 0;
+        c = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[11] - 1990404162 | 0;
+        b = (b << 22 | b >>> 10) + c | 0;
+        a += (b & c | ~b & d) + k[12] + 1804603682 | 0;
+        a = (a << 7 | a >>> 25) + b | 0;
+        d += (a & b | ~a & c) + k[13] - 40341101 | 0;
+        d = (d << 12 | d >>> 20) + a | 0;
+        c += (d & a | ~d & b) + k[14] - 1502002290 | 0;
+        c = (c << 17 | c >>> 15) + d | 0;
+        b += (c & d | ~c & a) + k[15] + 1236535329 | 0;
+        b = (b << 22 | b >>> 10) + c | 0;
+        a += (b & d | c & ~d) + k[1] - 165796510 | 0;
+        a = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[6] - 1069501632 | 0;
+        d = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[11] + 643717713 | 0;
+        c = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[0] - 373897302 | 0;
+        b = (b << 20 | b >>> 12) + c | 0;
+        a += (b & d | c & ~d) + k[5] - 701558691 | 0;
+        a = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[10] + 38016083 | 0;
+        d = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[15] - 660478335 | 0;
+        c = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[4] - 405537848 | 0;
+        b = (b << 20 | b >>> 12) + c | 0;
+        a += (b & d | c & ~d) + k[9] + 568446438 | 0;
+        a = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[14] - 1019803690 | 0;
+        d = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[3] - 187363961 | 0;
+        c = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[8] + 1163531501 | 0;
+        b = (b << 20 | b >>> 12) + c | 0;
+        a += (b & d | c & ~d) + k[13] - 1444681467 | 0;
+        a = (a << 5 | a >>> 27) + b | 0;
+        d += (a & c | b & ~c) + k[2] - 51403784 | 0;
+        d = (d << 9 | d >>> 23) + a | 0;
+        c += (d & b | a & ~b) + k[7] + 1735328473 | 0;
+        c = (c << 14 | c >>> 18) + d | 0;
+        b += (c & a | d & ~a) + k[12] - 1926607734 | 0;
+        b = (b << 20 | b >>> 12) + c | 0;
+        a += (b ^ c ^ d) + k[5] - 378558 | 0;
+        a = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[8] - 2022574463 | 0;
+        d = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[11] + 1839030562 | 0;
+        c = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[14] - 35309556 | 0;
+        b = (b << 23 | b >>> 9) + c | 0;
+        a += (b ^ c ^ d) + k[1] - 1530992060 | 0;
+        a = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[4] + 1272893353 | 0;
+        d = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[7] - 155497632 | 0;
+        c = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[10] - 1094730640 | 0;
+        b = (b << 23 | b >>> 9) + c | 0;
+        a += (b ^ c ^ d) + k[13] + 681279174 | 0;
+        a = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[0] - 358537222 | 0;
+        d = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[3] - 722521979 | 0;
+        c = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[6] + 76029189 | 0;
+        b = (b << 23 | b >>> 9) + c | 0;
+        a += (b ^ c ^ d) + k[9] - 640364487 | 0;
+        a = (a << 4 | a >>> 28) + b | 0;
+        d += (a ^ b ^ c) + k[12] - 421815835 | 0;
+        d = (d << 11 | d >>> 21) + a | 0;
+        c += (d ^ a ^ b) + k[15] + 530742520 | 0;
+        c = (c << 16 | c >>> 16) + d | 0;
+        b += (c ^ d ^ a) + k[2] - 995338651 | 0;
+        b = (b << 23 | b >>> 9) + c | 0;
+        a += (c ^ (b | ~d)) + k[0] - 198630844 | 0;
+        a = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[7] + 1126891415 | 0;
+        d = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[14] - 1416354905 | 0;
+        c = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[5] - 57434055 | 0;
+        b = (b << 21 | b >>> 11) + c | 0;
+        a += (c ^ (b | ~d)) + k[12] + 1700485571 | 0;
+        a = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[3] - 1894986606 | 0;
+        d = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[10] - 1051523 | 0;
+        c = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[1] - 2054922799 | 0;
+        b = (b << 21 | b >>> 11) + c | 0;
+        a += (c ^ (b | ~d)) + k[8] + 1873313359 | 0;
+        a = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[15] - 30611744 | 0;
+        d = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[6] - 1560198380 | 0;
+        c = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[13] + 1309151649 | 0;
+        b = (b << 21 | b >>> 11) + c | 0;
+        a += (c ^ (b | ~d)) + k[4] - 145523070 | 0;
+        a = (a << 6 | a >>> 26) + b | 0;
+        d += (b ^ (a | ~c)) + k[11] - 1120210379 | 0;
+        d = (d << 10 | d >>> 22) + a | 0;
+        c += (a ^ (d | ~b)) + k[2] + 718787259 | 0;
+        c = (c << 15 | c >>> 17) + d | 0;
+        b += (d ^ (c | ~a)) + k[9] - 343485551 | 0;
+        b = (b << 21 | b >>> 11) + c | 0;
+        x[0] = a + x[0] | 0;
+        x[1] = b + x[1] | 0;
+        x[2] = c + x[2] | 0;
+        x[3] = d + x[3] | 0;
+      }
+      function md5blk(s) {
+        var md5blks = [], i;
+        for (i = 0; i < 64; i += 4) {
+          md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
+        }
+        return md5blks;
+      }
+      function md5blk_array(a) {
+        var md5blks = [], i;
+        for (i = 0; i < 64; i += 4) {
+          md5blks[i >> 2] = a[i] + (a[i + 1] << 8) + (a[i + 2] << 16) + (a[i + 3] << 24);
+        }
+        return md5blks;
+      }
+      function md51(s) {
+        var n = s.length, state = [1732584193, -271733879, -1732584194, 271733878], i, length, tail, tmp, lo, hi;
+        for (i = 64; i <= n; i += 64) {
+          md5cycle(state, md5blk(s.substring(i - 64, i)));
+        }
+        s = s.substring(i - 64);
+        length = s.length;
+        tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (i = 0; i < length; i += 1) {
+          tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3);
+        }
+        tail[i >> 2] |= 128 << (i % 4 << 3);
+        if (i > 55) {
+          md5cycle(state, tail);
+          for (i = 0; i < 16; i += 1) {
+            tail[i] = 0;
+          }
+        }
+        tmp = n * 8;
+        tmp = tmp.toString(16).match(/(.*?)(.{0,8})$/);
+        lo = parseInt(tmp[2], 16);
+        hi = parseInt(tmp[1], 16) || 0;
+        tail[14] = lo;
+        tail[15] = hi;
+        md5cycle(state, tail);
+        return state;
+      }
+      function md51_array(a) {
+        var n = a.length, state = [1732584193, -271733879, -1732584194, 271733878], i, length, tail, tmp, lo, hi;
+        for (i = 64; i <= n; i += 64) {
+          md5cycle(state, md5blk_array(a.subarray(i - 64, i)));
+        }
+        a = i - 64 < n ? a.subarray(i - 64) : new Uint8Array(0);
+        length = a.length;
+        tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (i = 0; i < length; i += 1) {
+          tail[i >> 2] |= a[i] << (i % 4 << 3);
+        }
+        tail[i >> 2] |= 128 << (i % 4 << 3);
+        if (i > 55) {
+          md5cycle(state, tail);
+          for (i = 0; i < 16; i += 1) {
+            tail[i] = 0;
+          }
+        }
+        tmp = n * 8;
+        tmp = tmp.toString(16).match(/(.*?)(.{0,8})$/);
+        lo = parseInt(tmp[2], 16);
+        hi = parseInt(tmp[1], 16) || 0;
+        tail[14] = lo;
+        tail[15] = hi;
+        md5cycle(state, tail);
+        return state;
+      }
+      function rhex(n) {
+        var s = "", j;
+        for (j = 0; j < 4; j += 1) {
+          s += hex_chr[n >> j * 8 + 4 & 15] + hex_chr[n >> j * 8 & 15];
+        }
+        return s;
+      }
+      function hex(x) {
+        var i;
+        for (i = 0; i < x.length; i += 1) {
+          x[i] = rhex(x[i]);
+        }
+        return x.join("");
+      }
+      if (hex(md51("hello")) !== "5d41402abc4b2a76b9719d911017c592")
+        ;
+      if (typeof ArrayBuffer !== "undefined" && !ArrayBuffer.prototype.slice) {
+        (function() {
+          function clamp(val, length) {
+            val = val | 0 || 0;
+            if (val < 0) {
+              return Math.max(val + length, 0);
+            }
+            return Math.min(val, length);
+          }
+          ArrayBuffer.prototype.slice = function(from, to) {
+            var length = this.byteLength, begin = clamp(from, length), end2 = length, num, target, targetArray, sourceArray;
+            if (to !== undefined$1) {
+              end2 = clamp(to, length);
+            }
+            if (begin > end2) {
+              return new ArrayBuffer(0);
+            }
+            num = end2 - begin;
+            target = new ArrayBuffer(num);
+            targetArray = new Uint8Array(target);
+            sourceArray = new Uint8Array(this, begin, num);
+            targetArray.set(sourceArray);
+            return target;
+          };
+        })();
+      }
+      function toUtf8(str) {
+        if (/[\u0080-\uFFFF]/.test(str)) {
+          str = unescape(encodeURIComponent(str));
+        }
+        return str;
+      }
+      function utf8Str2ArrayBuffer(str, returnUInt8Array) {
+        var length = str.length, buff = new ArrayBuffer(length), arr = new Uint8Array(buff), i;
+        for (i = 0; i < length; i += 1) {
+          arr[i] = str.charCodeAt(i);
+        }
+        return returnUInt8Array ? arr : buff;
+      }
+      function arrayBuffer2Utf8Str(buff) {
+        return String.fromCharCode.apply(null, new Uint8Array(buff));
+      }
+      function concatenateArrayBuffers(first, second, returnUInt8Array) {
+        var result = new Uint8Array(first.byteLength + second.byteLength);
+        result.set(new Uint8Array(first));
+        result.set(new Uint8Array(second), first.byteLength);
+        return returnUInt8Array ? result : result.buffer;
+      }
+      function hexToBinaryString(hex2) {
+        var bytes = [], length = hex2.length, x;
+        for (x = 0; x < length - 1; x += 2) {
+          bytes.push(parseInt(hex2.substr(x, 2), 16));
+        }
+        return String.fromCharCode.apply(String, bytes);
+      }
+      function SparkMD52() {
+        this.reset();
+      }
+      SparkMD52.prototype.append = function(str) {
+        this.appendBinary(toUtf8(str));
+        return this;
+      };
+      SparkMD52.prototype.appendBinary = function(contents) {
+        this._buff += contents;
+        this._length += contents.length;
+        var length = this._buff.length, i;
+        for (i = 64; i <= length; i += 64) {
+          md5cycle(this._hash, md5blk(this._buff.substring(i - 64, i)));
+        }
+        this._buff = this._buff.substring(i - 64);
+        return this;
+      };
+      SparkMD52.prototype.end = function(raw) {
+        var buff = this._buff, length = buff.length, i, tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], ret;
+        for (i = 0; i < length; i += 1) {
+          tail[i >> 2] |= buff.charCodeAt(i) << (i % 4 << 3);
+        }
+        this._finish(tail, length);
+        ret = hex(this._hash);
+        if (raw) {
+          ret = hexToBinaryString(ret);
+        }
+        this.reset();
+        return ret;
+      };
+      SparkMD52.prototype.reset = function() {
+        this._buff = "";
+        this._length = 0;
+        this._hash = [1732584193, -271733879, -1732584194, 271733878];
+        return this;
+      };
+      SparkMD52.prototype.getState = function() {
+        return {
+          buff: this._buff,
+          length: this._length,
+          hash: this._hash.slice()
+        };
+      };
+      SparkMD52.prototype.setState = function(state) {
+        this._buff = state.buff;
+        this._length = state.length;
+        this._hash = state.hash;
+        return this;
+      };
+      SparkMD52.prototype.destroy = function() {
+        delete this._hash;
+        delete this._buff;
+        delete this._length;
+      };
+      SparkMD52.prototype._finish = function(tail, length) {
+        var i = length, tmp, lo, hi;
+        tail[i >> 2] |= 128 << (i % 4 << 3);
+        if (i > 55) {
+          md5cycle(this._hash, tail);
+          for (i = 0; i < 16; i += 1) {
+            tail[i] = 0;
+          }
+        }
+        tmp = this._length * 8;
+        tmp = tmp.toString(16).match(/(.*?)(.{0,8})$/);
+        lo = parseInt(tmp[2], 16);
+        hi = parseInt(tmp[1], 16) || 0;
+        tail[14] = lo;
+        tail[15] = hi;
+        md5cycle(this._hash, tail);
+      };
+      SparkMD52.hash = function(str, raw) {
+        return SparkMD52.hashBinary(toUtf8(str), raw);
+      };
+      SparkMD52.hashBinary = function(content, raw) {
+        var hash3 = md51(content), ret = hex(hash3);
+        return raw ? hexToBinaryString(ret) : ret;
+      };
+      SparkMD52.ArrayBuffer = function() {
+        this.reset();
+      };
+      SparkMD52.ArrayBuffer.prototype.append = function(arr) {
+        var buff = concatenateArrayBuffers(this._buff.buffer, arr, true), length = buff.length, i;
+        this._length += arr.byteLength;
+        for (i = 64; i <= length; i += 64) {
+          md5cycle(this._hash, md5blk_array(buff.subarray(i - 64, i)));
+        }
+        this._buff = i - 64 < length ? new Uint8Array(buff.buffer.slice(i - 64)) : new Uint8Array(0);
+        return this;
+      };
+      SparkMD52.ArrayBuffer.prototype.end = function(raw) {
+        var buff = this._buff, length = buff.length, tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], i, ret;
+        for (i = 0; i < length; i += 1) {
+          tail[i >> 2] |= buff[i] << (i % 4 << 3);
+        }
+        this._finish(tail, length);
+        ret = hex(this._hash);
+        if (raw) {
+          ret = hexToBinaryString(ret);
+        }
+        this.reset();
+        return ret;
+      };
+      SparkMD52.ArrayBuffer.prototype.reset = function() {
+        this._buff = new Uint8Array(0);
+        this._length = 0;
+        this._hash = [1732584193, -271733879, -1732584194, 271733878];
+        return this;
+      };
+      SparkMD52.ArrayBuffer.prototype.getState = function() {
+        var state = SparkMD52.prototype.getState.call(this);
+        state.buff = arrayBuffer2Utf8Str(state.buff);
+        return state;
+      };
+      SparkMD52.ArrayBuffer.prototype.setState = function(state) {
+        state.buff = utf8Str2ArrayBuffer(state.buff, true);
+        return SparkMD52.prototype.setState.call(this, state);
+      };
+      SparkMD52.ArrayBuffer.prototype.destroy = SparkMD52.prototype.destroy;
+      SparkMD52.ArrayBuffer.prototype._finish = SparkMD52.prototype._finish;
+      SparkMD52.ArrayBuffer.hash = function(arr, raw) {
+        var hash3 = md51_array(new Uint8Array(arr)), ret = hex(hash3);
+        return raw ? hexToBinaryString(ret) : ret;
+      };
+      return SparkMD52;
+    });
+  })(sparkMd5);
+  var SparkMD5 = sparkMd5.exports;
+  var fileSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
+  var FileChecksum = class {
+    static create(file, callback) {
+      const instance = new FileChecksum(file);
+      instance.create(callback);
+    }
+    constructor(file) {
+      this.file = file;
+      this.chunkSize = 2097152;
+      this.chunkCount = Math.ceil(this.file.size / this.chunkSize);
+      this.chunkIndex = 0;
+    }
+    create(callback) {
+      this.callback = callback;
+      this.md5Buffer = new SparkMD5.ArrayBuffer();
+      this.fileReader = new FileReader();
+      this.fileReader.addEventListener("load", (event) => this.fileReaderDidLoad(event));
+      this.fileReader.addEventListener("error", (event) => this.fileReaderDidError(event));
+      this.readNextChunk();
+    }
+    fileReaderDidLoad(event) {
+      this.md5Buffer.append(event.target.result);
+      if (!this.readNextChunk()) {
+        const binaryDigest = this.md5Buffer.end(true);
+        const base64digest = btoa(binaryDigest);
+        this.callback(null, base64digest);
+      }
+    }
+    fileReaderDidError(event) {
+      this.callback(`Error reading ${this.file.name}`);
+    }
+    readNextChunk() {
+      if (this.chunkIndex < this.chunkCount || this.chunkIndex == 0 && this.chunkCount == 0) {
+        const start4 = this.chunkIndex * this.chunkSize;
+        const end2 = Math.min(start4 + this.chunkSize, this.file.size);
+        const bytes = fileSlice.call(this.file, start4, end2);
+        this.fileReader.readAsArrayBuffer(bytes);
+        this.chunkIndex++;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  };
+  function getMetaValue(name) {
+    const element = findElement(document.head, `meta[name="${name}"]`);
+    if (element) {
+      return element.getAttribute("content");
+    }
+  }
+  function findElements(root, selector) {
+    if (typeof root == "string") {
+      selector = root;
+      root = document;
+    }
+    const elements = root.querySelectorAll(selector);
+    return toArray(elements);
+  }
+  function findElement(root, selector) {
+    if (typeof root == "string") {
+      selector = root;
+      root = document;
+    }
+    return root.querySelector(selector);
+  }
+  function dispatchEvent2(element, type, eventInit = {}) {
+    const { disabled } = element;
+    const { bubbles, cancelable, detail } = eventInit;
+    const event = document.createEvent("Event");
+    event.initEvent(type, bubbles || true, cancelable || true);
+    event.detail = detail || {};
+    try {
+      element.disabled = false;
+      element.dispatchEvent(event);
+    } finally {
+      element.disabled = disabled;
+    }
+    return event;
+  }
+  function toArray(value) {
+    if (Array.isArray(value)) {
+      return value;
+    } else if (Array.from) {
+      return Array.from(value);
+    } else {
+      return [].slice.call(value);
+    }
+  }
+  var BlobRecord = class {
+    constructor(file, checksum, url) {
+      this.file = file;
+      this.attributes = {
+        filename: file.name,
+        content_type: file.type || "application/octet-stream",
+        byte_size: file.size,
+        checksum
+      };
+      this.xhr = new XMLHttpRequest();
+      this.xhr.open("POST", url, true);
+      this.xhr.responseType = "json";
+      this.xhr.setRequestHeader("Content-Type", "application/json");
+      this.xhr.setRequestHeader("Accept", "application/json");
+      this.xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      const csrfToken = getMetaValue("csrf-token");
+      if (csrfToken != void 0) {
+        this.xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+      }
+      this.xhr.addEventListener("load", (event) => this.requestDidLoad(event));
+      this.xhr.addEventListener("error", (event) => this.requestDidError(event));
+    }
+    get status() {
+      return this.xhr.status;
+    }
+    get response() {
+      const { responseType, response } = this.xhr;
+      if (responseType == "json") {
+        return response;
+      } else {
+        return JSON.parse(response);
+      }
+    }
+    create(callback) {
+      this.callback = callback;
+      this.xhr.send(JSON.stringify({
+        blob: this.attributes
+      }));
+    }
+    requestDidLoad(event) {
+      if (this.status >= 200 && this.status < 300) {
+        const { response } = this;
+        const { direct_upload } = response;
+        delete response.direct_upload;
+        this.attributes = response;
+        this.directUploadData = direct_upload;
+        this.callback(null, this.toJSON());
+      } else {
+        this.requestDidError(event);
+      }
+    }
+    requestDidError(event) {
+      this.callback(`Error creating Blob for "${this.file.name}". Status: ${this.status}`);
+    }
+    toJSON() {
+      const result = {};
+      for (const key in this.attributes) {
+        result[key] = this.attributes[key];
+      }
+      return result;
+    }
+  };
+  var BlobUpload = class {
+    constructor(blob) {
+      this.blob = blob;
+      this.file = blob.file;
+      const { url, headers } = blob.directUploadData;
+      this.xhr = new XMLHttpRequest();
+      this.xhr.open("PUT", url, true);
+      this.xhr.responseType = "text";
+      for (const key in headers) {
+        this.xhr.setRequestHeader(key, headers[key]);
+      }
+      this.xhr.addEventListener("load", (event) => this.requestDidLoad(event));
+      this.xhr.addEventListener("error", (event) => this.requestDidError(event));
+    }
+    create(callback) {
+      this.callback = callback;
+      this.xhr.send(this.file.slice());
+    }
+    requestDidLoad(event) {
+      const { status, response } = this.xhr;
+      if (status >= 200 && status < 300) {
+        this.callback(null, response);
+      } else {
+        this.requestDidError(event);
+      }
+    }
+    requestDidError(event) {
+      this.callback(`Error storing "${this.file.name}". Status: ${this.xhr.status}`);
+    }
+  };
+  var id = 0;
+  var DirectUpload = class {
+    constructor(file, url, delegate) {
+      this.id = ++id;
+      this.file = file;
+      this.url = url;
+      this.delegate = delegate;
+    }
+    create(callback) {
+      FileChecksum.create(this.file, (error2, checksum) => {
+        if (error2) {
+          callback(error2);
+          return;
+        }
+        const blob = new BlobRecord(this.file, checksum, this.url);
+        notify(this.delegate, "directUploadWillCreateBlobWithXHR", blob.xhr);
+        blob.create((error3) => {
+          if (error3) {
+            callback(error3);
+          } else {
+            const upload = new BlobUpload(blob);
+            notify(this.delegate, "directUploadWillStoreFileWithXHR", upload.xhr);
+            upload.create((error4) => {
+              if (error4) {
+                callback(error4);
+              } else {
+                callback(null, blob.toJSON());
+              }
+            });
+          }
+        });
+      });
+    }
+  };
+  function notify(object, methodName, ...messages) {
+    if (object && typeof object[methodName] == "function") {
+      return object[methodName](...messages);
+    }
+  }
+  var DirectUploadController = class {
+    constructor(input, file) {
+      this.input = input;
+      this.file = file;
+      this.directUpload = new DirectUpload(this.file, this.url, this);
+      this.dispatch("initialize");
+    }
+    start(callback) {
+      const hiddenInput = document.createElement("input");
+      hiddenInput.type = "hidden";
+      hiddenInput.name = this.input.name;
+      this.input.insertAdjacentElement("beforebegin", hiddenInput);
+      this.dispatch("start");
+      this.directUpload.create((error2, attributes) => {
+        if (error2) {
+          hiddenInput.parentNode.removeChild(hiddenInput);
+          this.dispatchError(error2);
+        } else {
+          hiddenInput.value = attributes.signed_id;
+        }
+        this.dispatch("end");
+        callback(error2);
+      });
+    }
+    uploadRequestDidProgress(event) {
+      const progress = event.loaded / event.total * 100;
+      if (progress) {
+        this.dispatch("progress", {
+          progress
+        });
+      }
+    }
+    get url() {
+      return this.input.getAttribute("data-direct-upload-url");
+    }
+    dispatch(name, detail = {}) {
+      detail.file = this.file;
+      detail.id = this.directUpload.id;
+      return dispatchEvent2(this.input, `direct-upload:${name}`, {
+        detail
+      });
+    }
+    dispatchError(error2) {
+      const event = this.dispatch("error", {
+        error: error2
+      });
+      if (!event.defaultPrevented) {
+        alert(error2);
+      }
+    }
+    directUploadWillCreateBlobWithXHR(xhr) {
+      this.dispatch("before-blob-request", {
+        xhr
+      });
+    }
+    directUploadWillStoreFileWithXHR(xhr) {
+      this.dispatch("before-storage-request", {
+        xhr
+      });
+      xhr.upload.addEventListener("progress", (event) => this.uploadRequestDidProgress(event));
+    }
+  };
+  var inputSelector = "input[type=file][data-direct-upload-url]:not([disabled])";
+  var DirectUploadsController = class {
+    constructor(form) {
+      this.form = form;
+      this.inputs = findElements(form, inputSelector).filter((input) => input.files.length);
+    }
+    start(callback) {
+      const controllers = this.createDirectUploadControllers();
+      const startNextController = () => {
+        const controller = controllers.shift();
+        if (controller) {
+          controller.start((error2) => {
+            if (error2) {
+              callback(error2);
+              this.dispatch("end");
+            } else {
+              startNextController();
+            }
+          });
+        } else {
+          callback();
+          this.dispatch("end");
+        }
+      };
+      this.dispatch("start");
+      startNextController();
+    }
+    createDirectUploadControllers() {
+      const controllers = [];
+      this.inputs.forEach((input) => {
+        toArray(input.files).forEach((file) => {
+          const controller = new DirectUploadController(input, file);
+          controllers.push(controller);
+        });
+      });
+      return controllers;
+    }
+    dispatch(name, detail = {}) {
+      return dispatchEvent2(this.form, `direct-uploads:${name}`, {
+        detail
+      });
+    }
+  };
+  var processingAttribute = "data-direct-uploads-processing";
+  var submitButtonsByForm = /* @__PURE__ */ new WeakMap();
+  var started = false;
+  function start2() {
+    if (!started) {
+      started = true;
+      document.addEventListener("click", didClick, true);
+      document.addEventListener("submit", didSubmitForm, true);
+      document.addEventListener("ajax:before", didSubmitRemoteElement);
+    }
+  }
+  function didClick(event) {
+    const { target } = event;
+    if ((target.tagName == "INPUT" || target.tagName == "BUTTON") && target.type == "submit" && target.form) {
+      submitButtonsByForm.set(target.form, target);
+    }
+  }
+  function didSubmitForm(event) {
+    handleFormSubmissionEvent(event);
+  }
+  function didSubmitRemoteElement(event) {
+    if (event.target.tagName == "FORM") {
+      handleFormSubmissionEvent(event);
+    }
+  }
+  function handleFormSubmissionEvent(event) {
+    const form = event.target;
+    if (form.hasAttribute(processingAttribute)) {
+      event.preventDefault();
+      return;
+    }
+    const controller = new DirectUploadsController(form);
+    const { inputs } = controller;
+    if (inputs.length) {
+      event.preventDefault();
+      form.setAttribute(processingAttribute, "");
+      inputs.forEach(disable);
+      controller.start((error2) => {
+        form.removeAttribute(processingAttribute);
+        if (error2) {
+          inputs.forEach(enable);
+        } else {
+          submitForm(form);
+        }
+      });
+    }
+  }
+  function submitForm(form) {
+    let button = submitButtonsByForm.get(form) || findElement(form, "input[type=submit], button[type=submit]");
+    if (button) {
+      const { disabled } = button;
+      button.disabled = false;
+      button.focus();
+      button.click();
+      button.disabled = disabled;
+    } else {
+      button = document.createElement("input");
+      button.type = "submit";
+      button.style.display = "none";
+      form.appendChild(button);
+      button.click();
+      form.removeChild(button);
+    }
+    submitButtonsByForm.delete(form);
+  }
+  function disable(input) {
+    input.disabled = true;
+  }
+  function enable(input) {
+    input.disabled = false;
+  }
+  function autostart() {
+    if (window.ActiveStorage) {
+      start2();
+    }
+  }
+  setTimeout(autostart, 1);
+
+  // app/javascript/helpers/index.js
+  function getMetaValue2(name) {
+    const element = findElement2(document.head, `meta[name="${name}"]`);
+    if (element) {
+      return element.getAttribute("content");
+    }
+  }
+  function findElement2(root, selector) {
+    if (typeof root == "string") {
+      selector = root;
+      root = document;
+    }
+    return root.querySelector(selector);
+  }
+  function removeElement(el) {
+    if (el && el.parentNode) {
+      el.parentNode.removeChild(el);
+    }
+  }
+  function insertAfter(el, referenceNode) {
+    return referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+  }
+
+  // app/javascript/controllers/dropzone_controller.js
+  var dropzone_controller_default = class extends Controller {
+    connect() {
+      this.dropZone = createDropZone(this);
+      this.hideFileInput();
+      this.bindEvents();
+      $3ed269f2f0fb224b$export$2e2bcd8739ae039.autoDiscover = false;
+    }
+    hideFileInput() {
+      this.inputTarget.disabled = true;
+      this.inputTarget.style.display = "none";
+    }
+    bindEvents() {
+      this.dropZone.on("addedfile", (file) => {
+        setTimeout(() => {
+          file.accepted && createDirectUploadController(this, file).start();
+        }, 500);
+      });
+      this.dropZone.on("removedfile", (file) => {
+        file.controller && removeElement(file.controller.hiddenInput);
+      });
+      this.dropZone.on("canceled", (file) => {
+        file.controller && file.controller.xhr.abort();
+      });
+    }
+    get headers() {
+      return { "X-CSRF-Token": getMetaValue2("csrf-token") };
+    }
+    get url() {
+      return this.inputTarget.getAttribute("data-direct-upload-url");
+    }
+    get maxFiles() {
+      return this.data.get("maxFiles") || 1;
+    }
+    get maxFileSize() {
+      return this.data.get("maxFileSize") || 256;
+    }
+    get acceptedFiles() {
+      return this.data.get("acceptedFiles");
+    }
+    get addRemoveLinks() {
+      return this.data.get("addRemoveLinks") || true;
+    }
+  };
+  __publicField(dropzone_controller_default, "targets", ["input"]);
+  var DirectUploadController2 = class {
+    constructor(source, file) {
+      this.directUpload = createDirectUpload(file, source.url, this);
+      this.source = source;
+      this.file = file;
+    }
+    start() {
+      this.file.controller = this;
+      this.hiddenInput = this.createHiddenInput();
+      this.directUpload.create((error2, attributes) => {
+        if (error2) {
+          removeElement(this.hiddenInput);
+          this.emitDropzoneError(error2);
+        } else {
+          this.hiddenInput.value = attributes.signed_id;
+          this.emitDropzoneSuccess();
+        }
+      });
+    }
+    createHiddenInput() {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = this.source.inputTarget.name;
+      insertAfter(input, this.source.inputTarget);
+      return input;
+    }
+    directUploadWillStoreFileWithXHR(xhr) {
+      this.bindProgressEvent(xhr);
+      this.emitDropzoneUploading();
+    }
+    bindProgressEvent(xhr) {
+      this.xhr = xhr;
+      this.xhr.upload.addEventListener("progress", (event) => this.uploadRequestDidProgress(event));
+    }
+    uploadRequestDidProgress(event) {
+      const element = this.source.element;
+      const progress = event.loaded / event.total * 100;
+      findElement2(this.file.previewTemplate, ".dz-upload").style.width = `${progress}%`;
+    }
+    emitDropzoneUploading() {
+      this.file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.UPLOADING;
+      this.source.dropZone.emit("processing", this.file);
+    }
+    emitDropzoneError(error2) {
+      this.file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.ERROR;
+      this.source.dropZone.emit("error", this.file, error2);
+      this.source.dropZone.emit("complete", this.file);
+    }
+    emitDropzoneSuccess() {
+      this.file.status = $3ed269f2f0fb224b$export$2e2bcd8739ae039.SUCCESS;
+      this.source.dropZone.emit("success", this.file);
+      this.source.dropZone.emit("complete", this.file);
+    }
+  };
+  function createDirectUploadController(source, file) {
+    return new DirectUploadController2(source, file);
+  }
+  function createDirectUpload(file, url, controller) {
+    return new DirectUpload(file, url, controller);
+  }
+  function createDropZone(controller) {
+    return new $3ed269f2f0fb224b$export$2e2bcd8739ae039(controller.element, {
+      url: controller.url,
+      headers: controller.headers,
+      maxFiles: controller.maxFiles,
+      maxFilesize: controller.maxFileSize,
+      acceptedFiles: controller.acceptedFiles,
+      addRemoveLinks: controller.addRemoveLinks,
+      autoQueue: false
+    });
+  }
 
   // app/javascript/controllers/index.js
-  application.register("hello", hello_controller_default);
+  application.register("dropzone", dropzone_controller_default);
 
   // node_modules/@popperjs/core/lib/index.js
   var lib_exports = {};
@@ -5711,7 +8377,7 @@
     read: () => read,
     reference: () => reference,
     right: () => right,
-    start: () => start2,
+    start: () => start3,
     top: () => top,
     variationPlacements: () => variationPlacements,
     viewport: () => viewport,
@@ -5725,17 +8391,17 @@
   var left = "left";
   var auto = "auto";
   var basePlacements = [top, bottom, right, left];
-  var start2 = "start";
+  var start3 = "start";
   var end = "end";
   var clippingParents = "clippingParents";
   var viewport = "viewport";
   var popper = "popper";
   var reference = "reference";
   var variationPlacements = /* @__PURE__ */ basePlacements.reduce(function(acc, placement) {
-    return acc.concat([placement + "-" + start2, placement + "-" + end]);
+    return acc.concat([placement + "-" + start3, placement + "-" + end]);
   }, []);
   var placements = /* @__PURE__ */ [].concat(basePlacements, [auto]).reduce(function(acc, placement) {
-    return acc.concat([placement, placement + "-" + start2, placement + "-" + end]);
+    return acc.concat([placement, placement + "-" + start3, placement + "-" + end]);
   }, []);
   var beforeRead = "beforeRead";
   var read = "read";
@@ -6478,7 +9144,7 @@
     if (mainAxis != null) {
       var len = mainAxis === "y" ? "height" : "width";
       switch (variation) {
-        case start2:
+        case start3:
           offsets[mainAxis] = offsets[mainAxis] - (reference2[len] / 2 - element[len] / 2);
           break;
         case end:
@@ -6597,7 +9263,7 @@
     for (var i = 0; i < placements2.length; i++) {
       var placement = placements2[i];
       var _basePlacement = getBasePlacement(placement);
-      var isStartVariation = getVariation(placement) === start2;
+      var isStartVariation = getVariation(placement) === start3;
       var isVertical = [top, bottom].indexOf(_basePlacement) >= 0;
       var len = isVertical ? "width" : "height";
       var overflow = detectOverflow(state, {
@@ -6828,8 +9494,8 @@
       var min2 = offset2 + overflow[mainSide];
       var max2 = offset2 - overflow[altSide];
       var additive = tether ? -popperRect[len] / 2 : 0;
-      var minLen = variation === start2 ? referenceRect[len] : popperRect[len];
-      var maxLen = variation === start2 ? -popperRect[len] : -referenceRect[len];
+      var minLen = variation === start3 ? referenceRect[len] : popperRect[len];
+      var maxLen = variation === start3 ? -popperRect[len] : -referenceRect[len];
       var arrowElement = state.elements.arrow;
       var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
         width: 0,
@@ -7404,10 +10070,10 @@
   };
   var getjQuery = () => {
     const {
-      jQuery
+      jQuery: jQuery2
     } = window;
-    if (jQuery && !document.body.hasAttribute("data-bs-no-jquery")) {
-      return jQuery;
+    if (jQuery2 && !document.body.hasAttribute("data-bs-no-jquery")) {
+      return jQuery2;
     }
     return null;
   };
@@ -8128,7 +10794,7 @@
       const hasPointerPenTouch = (event) => {
         return this._pointerEvent && (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH);
       };
-      const start3 = (event) => {
+      const start4 = (event) => {
         if (hasPointerPenTouch(event)) {
           this.touchStartX = event.clientX;
         } else if (!this._pointerEvent) {
@@ -8155,11 +10821,11 @@
         EventHandler.on(itemImg, EVENT_DRAG_START, (event) => event.preventDefault());
       });
       if (this._pointerEvent) {
-        EventHandler.on(this._element, EVENT_POINTERDOWN, (event) => start3(event));
+        EventHandler.on(this._element, EVENT_POINTERDOWN, (event) => start4(event));
         EventHandler.on(this._element, EVENT_POINTERUP, (event) => end2(event));
         this._element.classList.add(CLASS_NAME_POINTER_EVENT);
       } else {
-        EventHandler.on(this._element, EVENT_TOUCHSTART, (event) => start3(event));
+        EventHandler.on(this._element, EVENT_TOUCHSTART, (event) => start4(event));
         EventHandler.on(this._element, EVENT_TOUCHMOVE, (event) => move(event));
         EventHandler.on(this._element, EVENT_TOUCHEND, (event) => end2(event));
       }
@@ -13183,13 +15849,13 @@
     var idPool = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     function nextUniqueId() {
       var size = 12;
-      var id = "";
+      var id2 = "";
       while (size-- > 0) {
-        id += idPool[Math.random() * 62 | 0];
+        id2 += idPool[Math.random() * 62 | 0];
       }
-      return id;
+      return id2;
     }
-    function toArray(obj) {
+    function toArray3(obj) {
       var array = [];
       for (var i = (obj || []).length >>> 0; i--; ) {
         array[i] = obj[i];
@@ -13198,7 +15864,7 @@
     }
     function classArray(node) {
       if (node.classList) {
-        return toArray(node.classList);
+        return toArray3(node.classList);
       } else {
         return (node.getAttribute("class") || "").split(" ").filter(function(i) {
           return i;
@@ -13403,7 +16069,7 @@
     }
     function asSymbol(_ref2) {
       var prefix = _ref2.prefix, iconName = _ref2.iconName, children = _ref2.children, attributes = _ref2.attributes, symbol = _ref2.symbol;
-      var id = symbol === true ? "".concat(prefix, "-").concat(config.familyPrefix, "-").concat(iconName) : symbol;
+      var id2 = symbol === true ? "".concat(prefix, "-").concat(config.familyPrefix, "-").concat(iconName) : symbol;
       return [{
         tag: "svg",
         attributes: {
@@ -13412,7 +16078,7 @@
         children: [{
           tag: "symbol",
           attributes: _objectSpread({}, attributes, {
-            id
+            id: id2
           }),
           children
         }]
@@ -13804,7 +16470,7 @@
       mo = new MUTATION_OBSERVER(function(objects) {
         if (disabled)
           return;
-        toArray(objects).forEach(function(mutationRecord) {
+        toArray3(objects).forEach(function(mutationRecord) {
           if (mutationRecord.type === "childList" && mutationRecord.addedNodes.length > 0 && !isWatched(mutationRecord.addedNodes[0])) {
             if (config.searchPseudoElements) {
               pseudoElementsCallback(mutationRecord.target);
@@ -13936,7 +16602,7 @@
       return symbol === null ? false : symbol === "" ? true : symbol;
     }
     function attributesParser(node) {
-      var extraAttributes = toArray(node.attributes).reduce(function(acc, attr) {
+      var extraAttributes = toArray3(node.attributes).reduce(function(acc, attr) {
         if (acc.name !== "class" && acc.name !== "style") {
           acc[attr.name] = attr.value;
         }
@@ -14217,7 +16883,7 @@
       }
       var candidates = [];
       try {
-        candidates = toArray(root.querySelectorAll(prefixesDomQuery));
+        candidates = toArray3(root.querySelectorAll(prefixesDomQuery));
       } catch (e) {
       }
       if (candidates.length > 0) {
@@ -14273,7 +16939,7 @@
         if (node.getAttribute(pendingAttribute) !== null) {
           return resolve2();
         }
-        var children = toArray(node.children);
+        var children = toArray3(node.children);
         var alreadyProcessedPseudoElement = children.filter(function(c) {
           return c.getAttribute(DATA_FA_PSEUDO_ELEMENT) === position;
         })[0];
@@ -14339,7 +17005,7 @@
       if (!IS_DOM)
         return;
       return new picked(function(resolve2, reject2) {
-        var operations = toArray(root.querySelectorAll("*")).filter(processable).map(replace);
+        var operations = toArray3(root.querySelectorAll("*")).filter(processable).map(replace);
         var end3 = perf.begin("searchPseudoElements");
         disableObservation();
         picked.all(operations).then(function() {
