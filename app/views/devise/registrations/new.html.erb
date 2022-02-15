@@ -8,7 +8,6 @@
           <%= render "devise/shared/error_messages", resource: resource %>
 
           <div class="form-floating mb-3">
-            <%#= f.label :username, class: "form-label" %>
             <%= f.text_field :username, class: "form-control form-control-lg", placeholder: "Username", autocomplete: "username" %>
             <%= f.label :username %>
           </div>
@@ -19,13 +18,11 @@
           </div>
 
           <div class="form-floating mb-3">
-            <%#= f.label :password, class: "form-label" %>
             <%= f.password_field :password, class: "form-control form-control-lg", placeholder: "Password", autocomplete: "new-password" %>
             <%= f.label :password %>
           </div>
 
           <div class="form-floating mb-3">
-            <%#= f.label :password_confirmation, class: "form-label" %>
             <%= f.password_field :password_confirmation, class: "form-control form-control-lg", placeholder: "Password Confirmation", autocomplete: "new-password" %>
             <%= f.label :password_confirmation %>
           </div>
