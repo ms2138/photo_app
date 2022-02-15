@@ -53,6 +53,7 @@ gem "bootsnap", require: false
 
 gem 'devise', '~> 4.8.0'
 gem 'kaminari'
+gem 'pundit'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
