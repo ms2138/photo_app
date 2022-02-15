@@ -17,7 +17,7 @@ class PostsController < ApplicationController
       if @post.save
         format.html { redirect_to user_posts_path(@user), notice: "Post was successfully created." }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
