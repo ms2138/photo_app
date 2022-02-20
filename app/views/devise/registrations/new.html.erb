@@ -8,6 +8,11 @@
           <%= render "devise/shared/error_messages", resource: resource %>
 
           <div class="form-floating mb-3">
+            <%= f.text_field :name, class: "form-control form-control-lg", placeholder: "Name", autocomplete: "name" %>
+            <%= f.label :name %>
+          </div>
+
+          <div class="form-floating mb-3">
             <%= f.text_field :username, class: "form-control form-control-lg", placeholder: "Username", autocomplete: "username" %>
             <%= f.label :username %>
           </div>
