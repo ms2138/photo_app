@@ -18282,6 +18282,68 @@ body {
   color: red;
 }
 
+.gravatar {
+  border-radius: 5px;
+  width: 150px;
+  height: 150px;
+}
+
+.user-profile a {
+  color: black;
+  text-decoration: none;
+}
+.user-profile a:hover {
+  color: #5f5f5f;
+}
+.user-profile .username {
+  font-size: 36px;
+  line-height: 40px;
+  font-weight: 200;
+}
+.user-profile .email {
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 300;
+}
+.user-profile .website {
+  line-height: 0px;
+  font-size: 18px;
+  font-weight: 300;
+}
+.user-profile .wrapper {
+  display: flex;
+}
+.user-profile .edit-profile-btn {
+  height: 30px;
+  padding-top: 2px;
+  margin: 5px 0 0 15px;
+  font-weight: 500;
+}
+.user-profile .posts-info span {
+  font-weight: 600;
+}
+.user-profile .user-tabs {
+  border-top: 1px solid #efefef;
+  justify-content: center;
+}
+.user-profile .user-tabs a {
+  margin-right: 40px;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+}
+.user-profile .user-tabs a i {
+  padding-right: 1px;
+}
+.user-profile .user-tabs a:hover {
+  text-decoration: black;
+}
+.user-profile .user-tabs a.active {
+  border-top: 1px solid #262626;
+  margin-top: -1px;
+  color: #262626;
+}
+
 .field_with_errors .form-control {
   color: #eed3d7;
 }

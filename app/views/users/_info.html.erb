@@ -1,0 +1,17 @@
+<div class="me-4">
+    <div class="ms-4 mt-2 d-flex flex-column">
+        <p class="img-fluid mt-1"><%= gravatar_for user.email %></p>
+        <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-outline-dark" %>
+    </div>
+</div>
+
+<div class="mt-4 ms-4">
+    <div class="wrapper align-items-center">
+        <h2 class="username"><%= user.name %></h2>
+        <%= link_to user.website do %>
+            <span class="ms-3"><i class="fa fa-external-link-alt" aria-hidden="true"></i></span>
+        <% end %>
+    </div>
+    <p class="email"><%= user.email %></p>
+    <p><%= user.bio %></p>
+</div>

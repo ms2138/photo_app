@@ -1,1 +1,14 @@
 <% provide(:title, "Show User") %>
+
+<div class="user-profile">
+  <div class="row d-flex justify-content-center align-items-center">
+    <div class="col col-lg-7 col-lg-6">
+        <div class="d-flex justify-content-center">
+            <%= render 'info', user: @user %>
+        </div>
+      </div>
+      <div class="card-body py-5 text-black">
+        <%= render 'tabs', user: @user, posts: @posts %>
+      </div>
+    </div>
+</div>
