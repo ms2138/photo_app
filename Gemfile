@@ -54,6 +54,7 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.8.0'
 gem 'kaminari'
 gem 'pundit'
+gem 'acts_as_votable', '~> 0.13.2'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
