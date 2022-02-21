@@ -15,17 +15,20 @@ html {
     padding-top: 100px;
   }
 
-#logo {
+  #logo {
     float: left;
     margin-right: 30px;
     color: black;
     font-size: 1.5em;
     font-weight: bold;
+    text-decoration: none;
+    &:hover {
+      color: rgb(85, 85, 85);
+    }
     span {
       margin-left: 5px;
       letter-spacing: -1px;
     }
-    text-decoration: none;
   }
 
   .navbar-action-section {
@@ -38,7 +41,7 @@ html {
         font-size: 20px;
         color: black;
         &:hover {
-          color: rgb(129, 129, 129);
+          color: rgb(105, 105, 105);
         }
     }
   }
@@ -75,7 +78,7 @@ html {
         color: rgb(95, 95, 95);
       }
     }
-    
+
     .username {
       font-size: 36px;
       line-height: 40px;
@@ -98,20 +101,18 @@ html {
       display: flex;
     }
   
-    .edit-profile-btn {
-      height: 30px;
-      padding-top: 2px;
-      margin: 5px 0 0 15px;
-      font-weight: 500;
-    }
-  
     .posts-info {
       span {
         font-weight: 600;
       }
     }
+
+    .btn-outline-dark:hover {
+      background: rgb(65, 65, 65);
+      color: white;
+    }
   
-    .user-tabs{
+    .tabs{
       border-top: 1px solid #efefef;
       justify-content: center;
     
