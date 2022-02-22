@@ -1,7 +1,10 @@
 class PostsController < ApplicationController
   before_action :set_user, only: [:index, :show, :new, :create, :destroy]
+  after_action :verify_authorized
 
   def index
+    @posts = @user.posts.with_attached_images.order("created_at").page(params[:page]).per(10)
+    authorize @posts
   end
 
   def show
