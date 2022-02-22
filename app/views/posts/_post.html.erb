@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header d-flex align-items-center justify-content-between">
+    <div class="user-avatar">
+      <%= gravatar_for post.user.email %>
+      <%= link_to user_path(post.user) do %>
+        <%= post.user.username %>
+      <% end %>
+    </div>
+    <% if policy(post).destroy? %>
+      <%= link_to user_post_path(post.user, post), method: :delete, data: { confirm: 'Delete post?' }, class: "icons" do %>
+        <i class="far fa-trash-alt" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
+  </div>
+    <%= render 'carousel', post: post %>
+  <div class="card-body">
+    <div class="post-time text-muted mb-2">
+      <%= link_to "#{time_ago_in_words(post.created_at).upcase} AGO", [post.user, post] %>
+    </div>
+    <p class="card-text content">
+      <% post.content.to_s.split(' ').each do |word| %>
+        <% if word.start_with?('#') %>
+          <%= link_to word, search_path(query: word) %>
+        <%else %>
+          <%= word %>
+        <%end %>
+      <% end %>
+    </p>
+    <% if show_comments == true %>
+      <div class="row mt-4" id="comment-form-<%= post.id.to_s %>">
+        <%= render 'comment_form', user: post.user, post: post %>
+      </div>
+      <div id="comments-<%= post.id.to_s %>">
+        <%= render 'comments', post: post %>
+      </div>
+    <% end %>
+  </div>
+</div>

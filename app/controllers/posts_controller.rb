@@ -11,11 +11,11 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = @user.posts.new
+    @post = authorize @user.posts.new
   end
 
   def create
-    @post = @user.posts.build(post_params)
+    @post = authorize @user.posts.build(post_params)
     respond_to do |format| 
       if @post.save
         format.html { redirect_to user_posts_path(@user), notice: "Post was successfully created." }
