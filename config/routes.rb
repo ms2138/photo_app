@@ -3,7 +3,9 @@ Rails.application.routes.draw do
              :controllers => { :registrations => :registrations }
 
   resources :users, only: [:show, :index, :destroy] do
-    resources :posts, only: [:show, :index, :new, :create]
+    resources :posts do
+      resources :comments, only: [:index, :create, :destroy], shallow: true
+    end
   end
 
   root "posts#index"
