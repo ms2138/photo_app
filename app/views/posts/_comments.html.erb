@@ -1,0 +1,13 @@
+<% post.comments.each do |comment| %>
+    <div class="mb-2 d-flex justify-content-between">
+        <div>
+            <span><strong><%= comment.user.username %></strong></span>
+            <span class="text-muted ms-2"><%= comment.content %></span>
+        </div>
+        <% if policy(comment).destroy? %>
+        <%= link_to comment_path(comment), method: :delete, remote: true do %>
+            <i class="fas fa-times fa-xs" aria-hidden="true" style="color: gray;"></i>
+        <% end %>
+    <% end %>
+    </div>
+<% end %>

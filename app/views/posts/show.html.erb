@@ -1,2 +1,9 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<% provide(:title, "Show Post") %>
+
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="post mt-4 mb-5">
+        <%= render 'post', post: @post, show_comments: true %>
+    </div>
+  </div>
+</div>

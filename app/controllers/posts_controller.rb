@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :destroy]
   before_action :set_user, only: [:index, :show, :new, :create, :destroy]
   after_action :verify_authorized
 
@@ -33,6 +34,11 @@ class PostsController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:user_id])
+  end
+
+  def set_post
+    @post = authorize Post.find_by(id: params[:id])
+    redirect_to root_url if @post.nil?
   end
 
 end

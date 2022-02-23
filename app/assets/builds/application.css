@@ -18378,6 +18378,10 @@ body {
   color: #5f5f5f;
 }
 
+.pagination {
+  text-align: center;
+}
+
 .field_with_errors .form-control {
   color: #eed3d7;
 }
