@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :index, :destroy] do
     resources :posts do
+      member do
+        patch "like", to: "posts#like"
+        patch "unlike", to: "posts#unlike"
+      end
       resources :comments, only: [:index, :create, :destroy], shallow: true
     end
   end

@@ -1,0 +1,6 @@
+<%= turbo_frame_tag post do %>
+  <%= link_to unlike_user_post_path(post.user, post), data: { turbo_method: :patch }, class: "icons" do %>
+    <i class="fas fa-heart" aria-hidden="true"></i>
+  <% end %>
+  <strong><%= render 'likes', post: post %></strong>
+<% end %>

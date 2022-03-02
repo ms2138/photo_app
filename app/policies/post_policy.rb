@@ -14,4 +14,16 @@ class PostPolicy < ApplicationPolicy
   def new?
     create?
   end
+
+  def liked?
+    user.present? && user.id == @user.id
+  end
+
+  def like?
+    user.present?
+  end
+
+  def unlike?
+    user.present?
+  end
 end

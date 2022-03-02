@@ -14,6 +14,13 @@
   </div>
     <%= render 'carousel', post: post %>
   <div class="card-body">
+    <div class="rows">
+      <% if current_user.liked? post %>
+        <%= render 'like', post: post %>
+      <% else %>
+        <%= render 'unlike', post: post %>
+      <% end %>
+    </div>
     <div class="post-time text-muted mb-2">
       <%= link_to "#{time_ago_in_words(post.created_at).upcase} AGO", [post.user, post] %>
     </div>
