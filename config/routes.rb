@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         patch "like", to: "posts#like"
         patch "unlike", to: "posts#unlike"
       end
-      resources :comments, only: [:index, :create, :destroy], shallow: true
+      resources :comments, only: [:create, :destroy], shallow: true
     end
   end
 
