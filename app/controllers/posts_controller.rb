@@ -52,6 +52,7 @@ class PostsController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:user_id])
+    redirect_to root_url if @user.nil?
   end
 
   def set_post
