@@ -1,0 +1,11 @@
+<div class="mb-2 d-flex justify-content-between" id="<%= dom_id comment %>">
+	<div>
+  	  <span><strong><%= comment.user.username %></strong></span>
+	    <span class="text-muted ms-2"><%= comment.content %></span>
+	</div>
+	<% if policy(comment).destroy? %>
+    <%= link_to comment_path(comment), data: { turbo_method: :delete } do %>
+        <i class="fas fa-times fa-xs" aria-hidden="true" style="color: gray;"></i>
+    <% end %>
+	<% end %>
+</div>

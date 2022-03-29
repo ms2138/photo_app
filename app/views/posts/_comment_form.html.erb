@@ -1,7 +1,0 @@
-<%= form_for [user, post, Comment.new], remote: true do |f| %>
-    <div class="mb-3">
-      <%= f.hidden_field :user_id, value: user.id %>
-      <%= f.hidden_field :post_id, value: post.id %>
-      <%= f.text_field :content, class: "form-control border-0", placeholder: "Add a comment ...", autocomplete: :off %>
-    </div>
-  <% end %>
