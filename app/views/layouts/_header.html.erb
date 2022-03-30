@@ -20,6 +20,8 @@
                         <i class="fa fa-user"></i>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><%= link_to "Users",  users_path, class: "dropdown-item" %></li>
+                        <li><hr class="dropdown-divider"></li>
                         <li><%= link_to "Profile", current_user, alt: 'Profile', title: 'Profile', class: "dropdown-item" %></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>

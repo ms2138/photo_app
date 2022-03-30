@@ -8,6 +8,12 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.id == @user.id
+    user.id == @user.id || @user.admin?
+  end
+
+  private
+
+  def user
+    record
   end
 end
