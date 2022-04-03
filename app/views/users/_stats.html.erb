@@ -1,0 +1,17 @@
+<div class="d-flex text-center">
+  <div>
+    <%= link_to user_posts_path(@user) do %>
+      <p class="h6"><%= user.posts.count %><span class="small text-muted ms-1">posts</span></p>
+    <% end %>
+  </div>
+  <div class="ms-5">
+    <%= link_to followers_user_path do %>
+      <p class="h6"><span id="followers"><%= user.followers.count %></span><span class="small text-muted ms-1">followers</span></p>
+    <% end %>
+  </div>
+  <div class="ms-5">
+    <%= link_to following_user_path do %>
+      <p class="h6"><span id="following"><%= user.following.count %></span><span class="small text-muted ms-1">following</span></p>
+    <% end %>
+  </div>
+</div>
