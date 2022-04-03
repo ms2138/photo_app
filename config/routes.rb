@@ -3,6 +3,10 @@ Rails.application.routes.draw do
              :controllers => { :registrations => :registrations }
 
   resources :users, only: [:show, :index, :destroy] do
+    member do
+      get :following, :followers
+    end
+    
     resources :posts do
       member do
         patch "like", to: "posts#like"
