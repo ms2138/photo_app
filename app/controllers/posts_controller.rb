@@ -27,7 +27,7 @@ class PostsController < ApplicationController
   end
 
   def like
-    @post.liked_by @user
+    @post.liked_by current_user
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(@post, partial: 'posts/like', locals: { post: @post })
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   end
 
   def unlike
-    @post.unliked_by @user
+    @post.unliked_by current_user
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(@post, partial: 'posts/unlike', locals: { post: @post })

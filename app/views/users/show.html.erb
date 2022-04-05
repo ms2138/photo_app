@@ -1,4 +1,4 @@
-<% provide(:title, "Show User") %>
+<% provide(:title, "Profile") %>
 
 <div class="user-profile">
   <div class="row d-flex justify-content-center align-items-center">
@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="card-body py-5 text-black">
-        <%= render 'tabs', user: @user, posts: @posts %>
+        <%= render 'tabs', user: @user, posts: @posts, liked: @liked %>
       </div>
     </div>
 </div>
