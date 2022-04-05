@@ -14,7 +14,11 @@
                         <i class="fa fa-plus"></i>
                     <% end %>
                 </li>
-
+                <li>
+                  <%= link_to user_posts_path(current_user) do %>
+                    <i class="fa fa-home"></i>
+                  <% end %>
+                </li>
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" role="button" data-bs-toggle="dropdown">
                         <i class="fa fa-user"></i>
