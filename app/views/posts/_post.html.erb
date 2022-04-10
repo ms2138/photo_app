@@ -1,43 +1,45 @@
-<div class="card">
-  <div class="card-header d-flex align-items-center justify-content-between">
-    <div class="user-avatar">
-      <%= gravatar_for post.user.email %>
-      <%= link_to user_path(post.user) do %>
-        <%= post.user.username %>
-      <% end %>
-    </div>
-    <% if policy(post).destroy? %>
-      <%= link_to user_post_path(post.user, post), method: :delete, data: { confirm: 'Delete post?' }, class: "icons" do %>
-        <i class="far fa-trash-alt" aria-hidden="true"></i>
-      <% end %>
-    <% end %>
-  </div>
-    <%= render 'carousel', post: post %>
-  <div class="card-body">
-    <div class="rows">
-      <% if current_user.liked? post %>
-        <%= render 'like', post: post %>
-      <% else %>
-        <%= render 'unlike', post: post %>
-      <% end %>
-    </div>
-    <div class="post-time text-muted mb-2">
-      <%= link_to "#{time_ago_in_words(post.created_at).upcase} AGO", [post.user, post] %>
-    </div>
-    <p class="card-text content">
-      <% post.content.to_s.split(' ').each do |word| %>
-        <% if word.start_with?('#') %>
-          <%= link_to word, search_path(query: word) %>
-        <%else %>
-          <%= word %>
-        <%end %>
-      <% end %>
-    </p>
-    <% if show_comments == true %>
-      <div class="row mt-4" id="new_comment">
-        <%= render 'comments/form', user: post.user, post: post, comment: Comment.new %>
+<div class="post mt-4 mb-5">
+  <div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <div class="user-avatar">
+        <%= gravatar_for post.user.email %>
+        <%= link_to user_path(post.user) do %>
+          <%= post.user.username %>
+        <% end %>
       </div>
-      <%= render partial: 'comments/comments', locals: { post: post } %>
-    <% end %>
+      <% if policy(post).destroy? %>
+        <%= link_to user_post_path(post.user, post), method: :delete, data: { confirm: 'Delete post?' }, class: "icons" do %>
+          <i class="far fa-trash-alt" aria-hidden="true"></i>
+        <% end %>
+      <% end %>
+    </div>
+      <%= render 'carousel', post: post %>
+    <div class="card-body">
+      <div class="rows">
+        <% if current_user.liked? post %>
+          <%= render 'like', post: post %>
+        <% else %>
+          <%= render 'unlike', post: post %>
+        <% end %>
+      </div>
+      <div class="post-time text-muted mb-2">
+        <%= link_to "#{time_ago_in_words(post.created_at).upcase} AGO", [post.user, post] %>
+      </div>
+      <p class="card-text content">
+        <% post.content.to_s.split(' ').each do |word| %>
+          <% if word.start_with?('#') %>
+            <%= link_to word, search_path(query: word) %>
+          <%else %>
+            <%= word %>
+          <%end %>
+        <% end %>
+      </p>
+      <% if show_comments == true %>
+        <div class="row mt-4" id="new_comment">
+          <%= render 'comments/form', user: post.user, post: post, comment: Comment.new %>
+        </div>
+        <%= render partial: 'comments/comments', locals: { post: post } %>
+      <% end %>
+    </div>
   </div>
 </div>

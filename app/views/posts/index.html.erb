@@ -2,11 +2,7 @@
 
 <div class="row justify-content-center">
   <div class="col-md-7">
-    <% @posts.each do |post| %>
-      <div class="post mt-4 mb-5">
-        <%= render 'post', post: post, show_comments: false %>
-      </div>
-    <% end %>
+    <%= render @posts, show_comments: false %>
     <div class="d-flex justify-content-center mb-5">
       <%= paginate @posts, class: "pagination" %>
     </div>
