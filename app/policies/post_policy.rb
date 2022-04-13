@@ -15,6 +15,10 @@ class PostPolicy < ApplicationPolicy
     create?
   end
 
+  def destroy?
+    user.present? && user == record.user
+  end
+
   def liked?
     user.present? && user.id == @user.id
   end

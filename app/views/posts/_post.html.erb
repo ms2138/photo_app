@@ -8,7 +8,7 @@
         <% end %>
       </div>
       <% if policy(post).destroy? %>
-        <%= link_to user_post_path(post.user, post), method: :delete, data: { confirm: 'Delete post?' }, class: "icons" do %>
+        <%= link_to user_post_path(post.user, post), data: { turbo_method: :delete, turbo_confirm: 'Delete post?' }, class: "icons" do %>
           <i class="far fa-trash-alt" aria-hidden="true"></i>
         <% end %>
       <% end %>

@@ -26,6 +26,15 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post.images.purge
+    @post.destroy
+    respond_to do |format|
+      format.html { redirect_to user_posts_url(@user), flash: { success: "Post was successfully destroyed." } }
+      format.json { head :no_content }
+    end
+  end
+
   def like
     @post.liked_by current_user
     respond_to do |format|
