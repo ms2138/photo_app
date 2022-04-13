@@ -19,8 +19,7 @@ class User < ApplicationRecord
   def liked
     liked_posts_ids = "SELECT votable_id FROM votes
                        WHERE voter_id = :user_id"
-    Post.where("id IN (#{liked_posts_ids})
-                OR user_id = :user_id", user_id: id)
+    Post.where("id IN (#{liked_posts_ids})", user_id: id)
   end
 
   def follow(user)
