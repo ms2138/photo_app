@@ -7,8 +7,8 @@ class UsersController < ApplicationController
   end
 
   def show
-      @posts = Post.includes(:user).where(user_id: @user.id).limit(5).order("created_at").page(params[:page]).per(3)
-      @liked = @user.liked.with_attached_images.limit(5).order("created_at").page(params[:page]).per(3)
+      @posts = Post.includes(:user).where(user_id: @user.id).limit(5).order("created_at DESC").page(params[:page]).per(4)
+      @liked = @user.liked.with_attached_images.limit(5).order("created_at DESC").page(params[:page]).per(4)
   end
 
   def edit
