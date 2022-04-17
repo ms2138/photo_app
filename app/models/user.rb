@@ -16,6 +16,13 @@ class User < ApplicationRecord
   validates :username, presence: true, length: { maximum: 40 }
   validates :name, presence: true, length: { maximum: 100 }
   
+  def feed
+    following_ids = "SELECT followed_id FROM relationships
+                     WHERE follower_id = :user_id" 
+    Post.where("user_id IN (#{following_ids})
+                OR user_id = :user_id", user_id: id)
+  end
+
   def liked
     liked_posts_ids = "SELECT votable_id FROM votes
                        WHERE voter_id = :user_id"
