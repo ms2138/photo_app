@@ -18244,6 +18244,7 @@ body {
 
 #logo {
   float: left;
+  padding: 0px;
   margin-right: 30px;
   color: black;
   font-size: 1.5em;
@@ -18382,10 +18383,9 @@ body {
   text-align: center;
 }
 
-.preview-image {
+.profile-tabs img {
   border-radius: 5px;
-  width: 100%;
-  height: 100%;
+  height: 400px;
 }
 
 .field_with_errors .form-control {
