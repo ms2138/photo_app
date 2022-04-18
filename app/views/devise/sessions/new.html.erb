@@ -4,7 +4,7 @@
       <div class="card-body p-4 text-center">
         <h1 class="card-title mb-4">Sign in</h1>
 
-        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
           <%= render "devise/shared/error_messages", resource: resource %>
 
           <div class="form-floating mb-3">
