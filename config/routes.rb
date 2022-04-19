@@ -18,5 +18,8 @@ Rails.application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
 
+  get 'search/index'
+  get 'search', to: 'search#index'
+
   root "posts#index"
 end

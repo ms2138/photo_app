@@ -1,0 +1,23 @@
+<% provide(:title, "Search Results") %>
+
+<div>
+  <% if @posts.exists? %>
+  <div class="row g-2 justify-content-center">
+    <h1 class="text-center mb-4">Top Matches</h1>
+      <% @posts.each do |post| %>
+        <% post.images.each do |image| %>
+          <div class="col-6 mx-auto">
+            <%= link_to [post.user, post] do %>
+              <%= image_tag image.variant(resize_to_limit: [400, 400]), class: 'preview-image' %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+      <div class="d-flex justify-content-center my-5">
+        <%= paginate @posts, class: "pagination" %>
+      </div>
+    </div>
+  <% else %>
+    <h1 class="text-center">No results found</h1>
+  <% end %>
+</div>
