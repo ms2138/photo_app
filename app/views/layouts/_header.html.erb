@@ -11,13 +11,13 @@
 		</button>
     <div class="collapse navbar-collapse" id="navBarToggle">
 			<% if user_signed_in? %>
-				<div class="m-auto">
+				<div class="ms-auto">
 					<%= form_with url: search_path, method: :get, local: true, class: 'form-inline search-form' do |form| %>
 						<%= form.text_field :query, value: params[:query], class: 'form-control mr-sm-2', placeholder: '#Search' %>
 					<% end %>
 				</div>
 			<% end %>
-			<ul class="navbar-nav navbar-action-section">
+			<ul class="navbar-nav ms-auto navbar-action-section">
 				<% if user_signed_in? %>
 					<li>
 						<%= link_to new_user_post_path(current_user), alt: 'New Post', title: 'New post' do %>
