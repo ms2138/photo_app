@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   has_many :comments, -> { order('created_at desc') }, dependent: :destroy
   after_commit :create_hash_tags, on: :create
 
-  validates :content, presence: true
+  validates :content, presence: true, length: { minimum: 1, maximum: 300 }
   validates :images, attached: true, content_type: ['image/png', 'image/jpeg']
 
   def create_hash_tags
