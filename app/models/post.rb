@@ -8,6 +8,7 @@ class Post < ApplicationRecord
   after_commit :create_hash_tags, on: :create
 
   validates :content, presence: true
+  validates :images, attached: true, content_type: ['image/png', 'image/jpeg']
 
   def create_hash_tags
     scan_for_hash_tags.each do |name|
