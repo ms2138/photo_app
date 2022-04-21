@@ -7,7 +7,7 @@
         <h1 class="card-title mb-4">Create Post</h1>
 
           <%= form_with(model: [@post.user, @post], local: true, multipart: true) do |f| %>
-              <%= render 'devise/shared/error_messages', resource: f.object %>
+              <%= render 'shared/error_messages', resource: f.object %>
 
               <div class="form-group mb-3">
                 <%= f.text_area :content, class: "form-control", rows: 4, autofocus: true, autocomplete: "content"%>
