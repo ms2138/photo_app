@@ -18266,6 +18266,7 @@ a {
 .navbar-action-section a {
   padding-left: 15px;
   text-decoration: none;
+  outline: none !important;
 }
 .navbar-action-section svg {
   font-size: 20px;

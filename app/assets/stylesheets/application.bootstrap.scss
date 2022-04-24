@@ -40,6 +40,8 @@ html {
     a {
       padding-left: 15px;
       text-decoration: none;
+      // Remove outline on dropdown menu
+      outline: none !important;
     }
 
     svg {
@@ -50,7 +52,7 @@ html {
         }
     }
   }
-
+ 
   .dropzone {
     border: dashed 2px rgb(190, 190, 190);
     border-radius: 10px;
