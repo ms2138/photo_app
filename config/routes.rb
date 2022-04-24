@@ -21,5 +21,8 @@ Rails.application.routes.draw do
   get 'search/index'
   get 'search', to: 'search#index'
 
+  get 'pages/about'
+  get 'pages/contact'
+
   root "posts#index"
 end
