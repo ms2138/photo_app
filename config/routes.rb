@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'pages/about'
   get 'pages/contact'
   get 'pages/privacy'
+  get 'feed', to: 'pages#feed'
 
-  root "posts#index"
+  root "pages#feed"
 end
