@@ -13,13 +13,13 @@
         <% end %>
       <% end %>
     </div>
-      <%= render 'carousel', post: post %>
+      <%= render 'shared/carousel', post: post %>
     <div class="card-body">
       <div class="rows">
         <% if current_user.liked? post %>
-          <%= render 'like', post: post %>
+          <%= render 'shared/like', post: post %>
         <% else %>
-          <%= render 'unlike', post: post %>
+          <%= render 'shared/unlike', post: post %>
         <% end %>
       </div>
       <div class="post-time text-muted mb-2">
