@@ -17,7 +17,7 @@
           <% posts.each do |post| %>
               <div class="col-6 mx-auto">
                 <%= link_to [user, post], data: { turbo_frame: "_top" } do %>
-                  <%= render 'posts/carousel', post: post %>
+                  <%= render 'shared/carousel', post: post %>
                 <% end %>
               </div>
           <% end %>
@@ -33,7 +33,7 @@
         <% liked.each do |post| %>
             <div class="col-6 mx-auto">
               <%= link_to [user, post], data: { turbo_frame: "_top" } do %>
-                <%= render 'posts/carousel', post: post %>
+                <%= render 'shared/carousel', post: post %>
               <% end %>
             </div>
         <% end %>
