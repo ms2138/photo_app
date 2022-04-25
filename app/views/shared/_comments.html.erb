@@ -1,5 +1,5 @@
 <div id="comments">
     <% post.comments.each do |comment| %>
-        <%= render comment %>
+        <%= render 'shared/comment', comment: comment %>
     <% end %>
 </div>

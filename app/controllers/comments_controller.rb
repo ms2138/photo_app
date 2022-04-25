@@ -13,8 +13,8 @@ class CommentsController < ApplicationController
                 @post = @comment.post
                 format.turbo_stream do
                    render turbo_stream:  [
-                    turbo_stream.update('new_comment', partial: 'comments/form', locals: { user: @user, post: @post, comment: Comment.new } ),
-                    turbo_stream.prepend('comments', partial: 'comments/comment', locals: { user: @user, post: @post, comment: @comment } )
+                    turbo_stream.update('new_comment', partial: 'shared/comment_form', locals: { user: @user, post: @post, comment: Comment.new } ),
+                    turbo_stream.prepend('comments', partial: 'shared/comment', locals: { user: @user, post: @post, comment: @comment } )
                 ]
                 end
             else

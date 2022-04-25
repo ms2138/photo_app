@@ -36,9 +36,9 @@
       </p>
       <% if show_comments == true %>
         <div class="row mt-4" id="new_comment">
-          <%= render 'comments/form', user: post.user, post: post, comment: Comment.new %>
+          <%= render 'shared/comment_form', user: post.user, post: post, comment: Comment.new %>
         </div>
-        <%= render partial: 'comments/comments', locals: { post: post } %>
+        <%= render partial: 'shared/comments', locals: { post: post } %>
       <% end %>
     </div>
   </div>
