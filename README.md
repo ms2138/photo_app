@@ -1,6 +1,8 @@
 # Photo App
 A Ruby on Rails application to share photos
 
+# Demo
+![Photo App - Animated gif demo](demo.gif)
 
 # Run Project
 To run the project:
